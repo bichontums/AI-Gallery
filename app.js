@@ -535,7 +535,7 @@ createFramedArtwork(
 createFramedArtwork(
     6,
     // './img/sky.jpg',
-    'https://res.cloudinary.com/dsjopahtl/image/upload/v1730629013/bobby_fywpzl.png',
+    'https://res.cloudinary.com/dsjopahtl/image/upload/v1731162461/Galaxy_gynx7g.jpg',
     0.05, // Frame depth
     { x: -7, y: 1.5, z: -0.3 }, // Position on the wall
     { x: 0, y: Math.PI, z: 0 } // Rotation
@@ -545,7 +545,7 @@ createFramedArtwork(
 createFramedArtwork(
     7,
     // './img/sky.jpg',
-    'https://res.cloudinary.com/dsjopahtl/image/upload/v1731160638/Wolf_Flowers_nnmxkz.jpg', // Replace with your image URL
+    'https://res.cloudinary.com/dsjopahtl/image/upload/v1731162459/Wolf_Flowers_i0ugzp.jpg', // Replace with your image URL
     0.05, // Frame depth
     { x: 7, y: 1.5, z: blockDepth + 6.8 }, // Position on the wall
     { x: 0, y: 0, z: 0 } // Rotation
@@ -564,7 +564,7 @@ createFramedArtwork(
 // Right inner block 2
 createFramedArtwork(
     9,
-    'https://res.cloudinary.com/dsjopahtl/image/upload/v1731160634/Carrot_Rabbit_vv3hku.jpg', // Replace with your image URL
+    'https://res.cloudinary.com/dsjopahtl/image/upload/v1731162460/Carrot_Rabbit_zo38g0.jpg', // Replace with your image URL
     0.05, // Frame depth
     { x: 7, y: 1.5, z: blockDepth - 7.2 }, // Position on the wall
     { x: 0, y: 0, z: 0 } // Rotation
@@ -603,7 +603,7 @@ createFramedArtwork(
 
 createFramedArtwork(
     13,
-    'https://res.cloudinary.com/dsjopahtl/image/upload/v1731160635/Pollen_Count_s0k2xl.jpg',
+    'https://res.cloudinary.com/dsjopahtl/image/upload/v1731162460/Pollen_Count_m7nvpf.jpg',
     // 'https://images.prestigeonline.com/wp-content/uploads/sites/3/2024/09/20213028/449845721_860060342834580_5680899768624535938_n-1024x682.jpeg', // Replace with your image URL
     0.05, // Frame depth
     { x: -14.7, y: 1.5, z: 7.5 }, // Position on the wall
@@ -612,7 +612,7 @@ createFramedArtwork(
 
 createFramedArtwork(
     14,
-    'https://res.cloudinary.com/dsjopahtl/image/upload/v1731160635/sticks_wnrcer.jpg',
+    'https://res.cloudinary.com/dsjopahtl/image/upload/v1731162459/sticks_hbcvvz.jpg',
     // 'https://images.prestigeonline.com/wp-content/uploads/sites/3/2024/09/20213028/449845721_860060342834580_5680899768624535938_n-1024x682.jpeg', // Replace with your image URL
     0.05, // Frame depth
     { x: -14.7, y: 1.5, z: 3 }, // Position on the wall
@@ -621,7 +621,7 @@ createFramedArtwork(
 
 createFramedArtwork(
     15,
-    'https://res.cloudinary.com/dsjopahtl/image/upload/v1731160634/stork_hy3xsl.jpg',
+    'https://res.cloudinary.com/dsjopahtl/image/upload/v1731162463/stork_c6zszs.jpg',
     // 'https://images.prestigeonline.com/wp-content/uploads/sites/3/2024/09/20213028/449845721_860060342834580_5680899768624535938_n-1024x682.jpeg', // Replace with your image URL
     0.05, // Frame depth
     { x: -14.7, y: 1.5, z: -1.5 }, // Position on the wall
@@ -630,7 +630,7 @@ createFramedArtwork(
 
 createFramedArtwork(
     16,
-    'https://res.cloudinary.com/dsjopahtl/image/upload/v1731161689/river_durh8e.jpg',
+    'https://res.cloudinary.com/dsjopahtl/image/upload/a_90/v1731162459/river_skvkif.jpg',
     // 'https://images.prestigeonline.com/wp-content/uploads/sites/3/2024/09/20213028/449845721_860060342834580_5680899768624535938_n-1024x682.jpeg', // Replace with your image URL
     0.05, // Frame depth
     { x: -14.7, y: 1.5, z: -6 }, // Position on the wall
@@ -639,7 +639,7 @@ createFramedArtwork(
 
 createFramedArtwork(
     17,
-    'https://res.cloudinary.com/dsjopahtl/image/upload/v1731160632/Milking_Cows_lemwqy.jpg',
+    'https://res.cloudinary.com/dsjopahtl/image/upload/v1731162460/Milking_Cows_lzvfm8.jpg',
     // 'https://images.prestigeonline.com/wp-content/uploads/sites/3/2024/09/20213028/449845721_860060342834580_5680899768624535938_n-1024x682.jpeg', // Replace with your image URL
     0.05, // Frame depth
     { x: -14.7, y: 1.5, z: -12 }, // Position on the wall
@@ -650,7 +650,7 @@ createFramedArtwork(
 
 createFramedArtwork(
     18,
-    'https://res.cloudinary.com/dsjopahtl/image/upload/v1731160637/The_Art_Of_The_Duck_xyodv5.jpg',
+    'https://res.cloudinary.com/dsjopahtl/image/upload/v1731162461/The_Art_Of_The_Duck_wskvvm.jpg',
     // 'https://images.prestigeonline.com/wp-content/uploads/sites/3/2024/09/20213028/449845721_860060342834580_5680899768624535938_n-1024x682.jpeg', // Replace with your image URL
     0.05, // Frame depth
     { x: 14.7, y: 1.5, z: 7.5 }, // Position on the wall
@@ -659,7 +659,7 @@ createFramedArtwork(
 
 createFramedArtwork(
     19,
-    'https://res.cloudinary.com/dsjopahtl/image/upload/v1731160635/Dripping_Red_pssilk.jpg',
+    'https://res.cloudinary.com/dsjopahtl/image/upload/v1731162460/Dripping_Red_nmqi0e.jpg',
     // 'https://images.prestigeonline.com/wp-content/uploads/sites/3/2024/09/20213028/449845721_860060342834580_5680899768624535938_n-1024x682.jpeg', // Replace with your image URL
     0.05, // Frame depth
     { x: 14.7, y: 1.5, z: 3 }, // Position on the wall
@@ -668,7 +668,7 @@ createFramedArtwork(
 
 createFramedArtwork(
     20,
-    'https://res.cloudinary.com/dsjopahtl/image/upload/v1731160632/Sunflower_Hammy_vuwpdu.jpg',
+    'https://res.cloudinary.com/dsjopahtl/image/upload/v1731162462/Sunflower_Hammy_chyxpe.jpg',
     // 'https://images.prestigeonline.com/wp-content/uploads/sites/3/2024/09/20213028/449845721_860060342834580_5680899768624535938_n-1024x682.jpeg', // Replace with your image URL
     0.05, // Frame depth
     { x: 14.7, y: 1.5, z: -1.5 }, // Position on the wall
@@ -677,7 +677,7 @@ createFramedArtwork(
 
 createFramedArtwork(
     21,
-    'https://res.cloudinary.com/dsjopahtl/image/upload/v1731160633/Mother_Of_Cats_obdfct.jpg',
+    'https://res.cloudinary.com/dsjopahtl/image/upload/v1731162461/Mother_Of_Cats_xzku8x.jpg',
     // 'https://images.prestigeonline.com/wp-content/uploads/sites/3/2024/09/20213028/449845721_860060342834580_5680899768624535938_n-1024x682.jpeg', // Replace with your image URL
     0.05, // Frame depth
     { x: 14.7, y: 1.5, z: -6 }, // Position on the wall
@@ -711,7 +711,7 @@ createFramedArtwork(
 createFramedArtwork(
     24,
     // './img/sky.jpg',
-    'https://res.cloudinary.com/dsjopahtl/image/upload/v1731160634/Cherry_Pond_anam4m.jpg', // Replace with your image URL
+    'https://res.cloudinary.com/dsjopahtl/image/upload/v1731162464/Cherry_Pond_xgglbx.jpg', // Replace with your image URL
     0.05, // Frame depth
     { x: 0, y: 2.8, z: 17.2 }, // Position on the wall
     { x: 0, y: Math.PI, z: 0 }, // Rotation
@@ -751,7 +751,6 @@ document.body.appendChild(crosshair);
 
 // ---------------------------------------- Section: Mobile View Panning and Joystick ---------------------------------------- //
 
-// ---------------------------------------- Separate Joystick and Panning Controls ---------------------------------------- //
 
 const joystick = {
     container: document.getElementById("joystick-container"),
@@ -761,8 +760,8 @@ const joystick = {
     deltaX: 0,
     deltaY: 0,
     touchId: null,
-    maxDistance: 40,    // Maximum distance joystick can move from center
-    sensitivity: 0.45   // Adjust for camera movement speed
+    maxDistance: 40,
+    sensitivity: 0.45
 };
 
 const panning = {
@@ -773,10 +772,10 @@ const panning = {
     initialEuler: null
 };
 
-const MAX_TILT_UP = Math.PI / 3;   // 60 degrees up
-const MAX_TILT_DOWN = -Math.PI / 3; // 60 degrees down
+const MAX_TILT_UP = Math.PI / 3;
+const MAX_TILT_DOWN = -Math.PI / 3;
 
-// Function to limit joystick handle movement within max distance
+// Function to limit joystick handle movement
 function limitJoystickHandle(deltaX, deltaY) {
     const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
     if (distance > joystick.maxDistance) {
@@ -787,11 +786,11 @@ function limitJoystickHandle(deltaX, deltaY) {
     return { deltaX, deltaY };
 }
 
-// Function to move the camera based on joystick position
+// Function to move camera based on joystick input
 function moveCameraWithJoystick(deltaX, deltaY) {
     const forward = new THREE.Vector3();
     controls.getObject().getWorldDirection(forward);
-    forward.y = 0; // Lock movement to the horizontal plane
+    forward.y = 0;
     forward.normalize();
 
     const right = new THREE.Vector3();
@@ -801,9 +800,8 @@ function moveCameraWithJoystick(deltaX, deltaY) {
     controls.getObject().position.add(right.multiplyScalar(deltaX * joystick.sensitivity / joystick.maxDistance));
 }
 
-// ---------------------------------------- Joystick Control ---------------------------------------- //
 
-// Joystick touchstart (inside joystick area)
+// Joystick touchstart event
 joystick.container.addEventListener("touchstart", (event) => {
     for (const touch of event.touches) {
         if (joystick.touchId === null) {
@@ -815,7 +813,7 @@ joystick.container.addEventListener("touchstart", (event) => {
     }
 });
 
-// Joystick touchmove (inside joystick area)
+// Joystick touchmove event
 joystick.container.addEventListener("touchmove", (event) => {
     for (const touch of event.touches) {
         if (touch.identifier === joystick.touchId) {
@@ -833,7 +831,7 @@ joystick.container.addEventListener("touchmove", (event) => {
     }
 });
 
-// Joystick touchend (inside joystick area)
+// Joystick touchend event
 joystick.container.addEventListener("touchend", (event) => {
     for (const touch of event.changedTouches) {
         if (touch.identifier === joystick.touchId) {
@@ -846,9 +844,8 @@ joystick.container.addEventListener("touchend", (event) => {
     }
 });
 
-// ---------------------------------------- Panning Control ---------------------------------------- //
 
-// Panning touchstart (outside joystick area)
+// Panning touchstart event (outside joystick area)
 window.addEventListener("touchstart", (event) => {
     for (const touch of event.touches) {
         if (!joystick.container.contains(touch.target) && panning.touchId === null) {
@@ -862,7 +859,7 @@ window.addEventListener("touchstart", (event) => {
     }
 });
 
-// Panning touchmove (outside joystick area)
+// Panning touchmove event
 window.addEventListener("touchmove", (event) => {
     for (const touch of event.touches) {
         if (touch.identifier === panning.touchId) {
@@ -883,7 +880,7 @@ window.addEventListener("touchmove", (event) => {
     }
 });
 
-// Panning touchend (outside joystick area)
+// Panning touchend event
 window.addEventListener("touchend", (event) => {
     for (const touch of event.changedTouches) {
         if (touch.identifier === panning.touchId) {
@@ -892,7 +889,6 @@ window.addEventListener("touchend", (event) => {
         }
     }
 });
-
 
 
 
