@@ -755,27 +755,27 @@ document.body.appendChild(crosshair);
 const joystick = {
     container: document.getElementById("joystick-container"),
     handle: document.getElementById("joystick-handle"),
+    isDragging: false,
     startX: 0,
     startY: 0,
     deltaX: 0,
     deltaY: 0,
-    touchId: null,
-    maxDistance: 40,
-    sensitivity: 0.45
+    sensitivity: 0.45,  // Adjust for camera movement speed
+    maxDistance: 40,    // Maximum distance joystick can move from center
+    touchId: null       // Track the touch ID for joystick control
 };
 
-const panning = {
-    touchId: null,
-    startX: 0,
-    startY: 0,
-    initialQuaternion: null,
-    initialEuler: null
-};
+// Panning variables
+let touchStartX = 0;
+let touchStartY = 0;
+let initialQuaternion;
+let initialEuler;
+let panningTouchId = null; // Track the touch ID for panning
 
-const MAX_TILT_UP = Math.PI / 3;
-const MAX_TILT_DOWN = -Math.PI / 3;
+const MAX_TILT_UP = Math.PI / 3;   // 60 degrees up
+const MAX_TILT_DOWN = -Math.PI / 3; // 60 degrees down
 
-// Function to limit joystick handle movement
+// Function to limit joystick handle movement within max distance
 function limitJoystickHandle(deltaX, deltaY) {
     const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
     if (distance > joystick.maxDistance) {
@@ -786,25 +786,26 @@ function limitJoystickHandle(deltaX, deltaY) {
     return { deltaX, deltaY };
 }
 
-// Function to move camera based on joystick input
+// Function to move the camera continuously based on joystick position
 function moveCameraWithJoystick(deltaX, deltaY) {
     const forward = new THREE.Vector3();
     controls.getObject().getWorldDirection(forward);
-    forward.y = 0;
+    forward.y = 0; // Lock movement to the horizontal plane
     forward.normalize();
 
     const right = new THREE.Vector3();
     right.crossVectors(forward, new THREE.Vector3(0, 1, 0)).normalize();
 
+    // Scale movement by joystick offset
     controls.getObject().position.add(forward.multiplyScalar(-deltaY * joystick.sensitivity / joystick.maxDistance));
     controls.getObject().position.add(right.multiplyScalar(deltaX * joystick.sensitivity / joystick.maxDistance));
 }
 
-
-// Joystick touchstart event
+// Joystick touchstart event (assigns only if not already active)
 joystick.container.addEventListener("touchstart", (event) => {
     for (const touch of event.touches) {
         if (joystick.touchId === null) {
+            joystick.isDragging = true;
             joystick.touchId = touch.identifier;
             joystick.startX = touch.clientX;
             joystick.startY = touch.clientY;
@@ -813,82 +814,87 @@ joystick.container.addEventListener("touchstart", (event) => {
     }
 });
 
-// Joystick touchmove event
-joystick.container.addEventListener("touchmove", (event) => {
+// General touchstart event for panning (only if outside joystick and no active panning)
+window.addEventListener("touchstart", (event) => {
     for (const touch of event.touches) {
-        if (touch.identifier === joystick.touchId) {
+        if (panningTouchId === null && !joystick.container.contains(touch.target)) {
+            panningTouchId = touch.identifier;
+            touchStartX = touch.clientX;
+            touchStartY = touch.clientY;
+            initialQuaternion = controls.getObject().quaternion.clone();
+            initialEuler = new THREE.Euler().setFromQuaternion(initialQuaternion, 'YXZ');
+            break;
+        }
+    }
+});
+
+// General touchmove event to handle joystick movement and panning concurrently
+window.addEventListener("touchmove", (event) => {
+    for (const touch of event.touches) {
+        if (touch.identifier === joystick.touchId && joystick.isDragging) {
+            // Handle joystick movement
             joystick.deltaX = touch.clientX - joystick.startX;
             joystick.deltaY = touch.clientY - joystick.startY;
 
+            // Apply limit to joystick handle movement
             const limitedMovement = limitJoystickHandle(joystick.deltaX, joystick.deltaY);
             joystick.deltaX = limitedMovement.deltaX;
             joystick.deltaY = limitedMovement.deltaY;
 
+            // Move joystick handle visually within limited area
             joystick.handle.style.transform = `translate(${joystick.deltaX}px, ${joystick.deltaY}px)`;
-            moveCameraWithJoystick(joystick.deltaX, joystick.deltaY);
-            break;
-        }
-    }
-});
+        } else if (touch.identifier === panningTouchId) {
+            // Handle panning
+            const touchEndX = touch.clientX;
+            const touchEndY = touch.clientY;
 
-// Joystick touchend event
-joystick.container.addEventListener("touchend", (event) => {
-    for (const touch of event.changedTouches) {
-        if (touch.identifier === joystick.touchId) {
-            joystick.touchId = null;
-            joystick.deltaX = 0;
-            joystick.deltaY = 0;
-            joystick.handle.style.transform = 'translate(0, 0)';
-            break;
-        }
-    }
-});
-
-
-// Panning touchstart event (outside joystick area)
-window.addEventListener("touchstart", (event) => {
-    for (const touch of event.touches) {
-        if (!joystick.container.contains(touch.target) && panning.touchId === null) {
-            panning.touchId = touch.identifier;
-            panning.startX = touch.clientX;
-            panning.startY = touch.clientY;
-            panning.initialQuaternion = controls.getObject().quaternion.clone();
-            panning.initialEuler = new THREE.Euler().setFromQuaternion(panning.initialQuaternion, 'YXZ');
-            break;
-        }
-    }
-});
-
-// Panning touchmove event
-window.addEventListener("touchmove", (event) => {
-    for (const touch of event.touches) {
-        if (touch.identifier === panning.touchId) {
-            const deltaX = touch.clientX - panning.startX;
-            const deltaY = touch.clientY - panning.startY;
+            const deltaX = touchEndX - touchStartX;
+            const deltaY = touchEndY - touchStartY;
 
             const rotationSpeedX = 0.005;
             const rotationSpeedY = 0.005;
 
-            const newRotationY = panning.initialEuler.y - deltaX * rotationSpeedX;
-            let newRotationX = panning.initialEuler.x - deltaY * rotationSpeedY;
+            // Calculate new rotation angles
+            const newRotationY = initialEuler.y - deltaX * rotationSpeedX;
+            let newRotationX = initialEuler.x - deltaY * rotationSpeedY;
+
+            // Clamp rotation to prevent flipping
             newRotationX = Math.max(MAX_TILT_DOWN, Math.min(MAX_TILT_UP, newRotationX));
 
             const newEuler = new THREE.Euler(newRotationX, newRotationY, 0, 'YXZ');
             controls.getObject().quaternion.setFromEuler(newEuler);
-            break;
         }
     }
 });
 
-// Panning touchend event
+// General touchend event to reset joystick and panning independently
 window.addEventListener("touchend", (event) => {
     for (const touch of event.changedTouches) {
-        if (touch.identifier === panning.touchId) {
-            panning.touchId = null;
-            break;
+        if (touch.identifier === joystick.touchId) {
+            // Reset joystick
+            joystick.isDragging = false;
+            joystick.deltaX = 0;
+            joystick.deltaY = 0;
+            joystick.handle.style.transform = 'translate(0, 0)';
+            joystick.touchId = null;
+        } else if (touch.identifier === panningTouchId) {
+            // Reset panning and allow new panning touches
+            panningTouchId = null;
         }
     }
 });
+
+// Animation loop for continuous camera movement based on joystick
+function animateJoystickMovement() {
+    if (joystick.isDragging && (joystick.deltaX !== 0 || joystick.deltaY !== 0)) {
+        moveCameraWithJoystick(joystick.deltaX, joystick.deltaY);
+    }
+    requestAnimationFrame(animateJoystickMovement);
+}
+
+// Start the joystick movement loop
+animateJoystickMovement();
+
 
 
 
