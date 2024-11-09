@@ -16,16 +16,18 @@ const loader = new GLTFLoader();
 // Ensure this function runs after the scene has loaded or a delay
 function fadeOutOverlay() {
     const overlay = document.getElementById("welcomeOverlay");
+    const joystickContainer = document.getElementById("joystick-container");
     overlay.style.opacity = '0'; // Trigger CSS transition to fade out
 
     // Remove overlay from display after fade-out completes
     setTimeout(() => {
         overlay.style.display = 'none';
+        joystickContainer.style.opacity = '1';
     }, 1000); // 2 seconds matches the transition time
 }
 
-// // Call this function once your scene is ready to display
-// setTimeout(fadeOutOverlay, 3000); // Adjust timing as needed
+// Call this function once your scene is ready to display
+setTimeout(fadeOutOverlay, 3000); // Adjust timing as needed
 
 
 // ---------------------------------------- Section: Gallery layout ---------------------------------------- //
