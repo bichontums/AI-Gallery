@@ -825,7 +825,7 @@ window.addEventListener("touchstart", (event) => {
             panningTouchId = touch.identifier;
             touchStartX = touch.clientX;
             touchStartY = touch.clientY;
-            initialQuaternion = controls.object().quaternion.clone();
+            initialQuaternion = controls.object.quaternion.clone();
             initialEuler = new THREE.Euler().setFromQuaternion(initialQuaternion, 'YXZ');
             break;
         }
@@ -866,7 +866,7 @@ window.addEventListener("touchmove", (event) => {
             newRotationX = Math.max(MAX_TILT_DOWN, Math.min(MAX_TILT_UP, newRotationX));
 
             const newEuler = new THREE.Euler(newRotationX, newRotationY, 0, 'YXZ');
-            controls.object().quaternion.setFromEuler(newEuler);
+            controls.object.quaternion.setFromEuler(newEuler);
         }
     }
 });
