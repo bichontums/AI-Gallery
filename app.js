@@ -751,9 +751,6 @@ document.body.appendChild(crosshair);
 
 // ---------------------------------------- Section: Mobile View Panning and Joystick ---------------------------------------- //
 
-
-// ---------------------------------------- Section: Joystick Controls ---------------------------------------- //
-
 const joystick = {
     container: document.getElementById("joystick-container"),
     handle: document.getElementById("joystick-handle"),
