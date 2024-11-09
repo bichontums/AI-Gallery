@@ -235,6 +235,7 @@ body {
 /* Joystick */
 
 #joystick-container {
+    display: none;
     position: fixed;
     bottom: 20px;
     left: 20px;
@@ -267,7 +268,11 @@ body {
 
 /* Mobile */
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 1024px) {
+
+    #joystick-container {
+        display: block;
+    }
 
     #chat-overlay {
         position: fixed;

@@ -748,113 +748,6 @@ crosshair.style.transform = 'translate(-50%, -50%)';
 crosshair.style.pointerEvents = 'none';
 document.body.appendChild(crosshair);
 
-// // Mobile view panning
-
-// let touchStartX = 0;
-// let touchStartY = 0;
-// let initialQuaternion;
-// let initialEuler;
-
-// const MAX_TILT_UP = Math.PI / 3;   // 60 degrees up
-// const MAX_TILT_DOWN = -Math.PI / 3; // 60 degrees down
-
-// window.addEventListener("touchstart", (event) => {
-//     if (event.touches.length === 1) { // Single finger touch
-//         touchStartX = event.touches[0].pageX;
-//         touchStartY = event.touches[0].pageY;
-
-//         // Store the initial quaternion and Euler angles
-//         initialQuaternion = controls.getObject().quaternion.clone();
-//         initialEuler = new THREE.Euler().setFromQuaternion(initialQuaternion, 'YXZ');
-//     }
-// });
-
-// window.addEventListener("touchmove", (event) => {
-//     if (event.touches.length === 1) { // Single finger drag
-//         const touchEndX = event.touches[0].pageX;
-//         const touchEndY = event.touches[0].pageY;
-
-//         // Calculate the movement delta
-//         const deltaX = touchEndX - touchStartX;
-//         const deltaY = touchEndY - touchStartY;
-
-//         // Adjust these for sensitivity of rotation
-//         const rotationSpeedX = 0.005; // Horizontal sensitivity
-//         const rotationSpeedY = 0.005; // Vertical sensitivity
-
-//         // Calculate new rotation angles
-//         const newRotationY = initialEuler.y - deltaX * rotationSpeedX; // Left-right rotation (yaw)
-//         let newRotationX = initialEuler.x - deltaY * rotationSpeedY;   // Up-down rotation (pitch)
-
-//         // Clamp the up-down rotation (pitch) to prevent flipping
-//         newRotationX = Math.max(MAX_TILT_DOWN, Math.min(MAX_TILT_UP, newRotationX));
-
-//         // Apply the new rotations using an Euler object
-//         const newEuler = new THREE.Euler(newRotationX, newRotationY, 0, 'YXZ');
-        
-//         // Update the camera's quaternion based on the new Euler angles
-//         controls.getObject().quaternion.setFromEuler(newEuler);
-//     }
-// });
-
-// // ---------------------------------------- Section: Joystick Controls ---------------------------------------- //
-
-// const joystick = {
-//     container: document.getElementById("joystick-container"),
-//     handle: document.getElementById("joystick-handle"),
-//     isDragging: false,
-//     startX: 0,
-//     startY: 0,
-//     deltaX: 0,
-//     deltaY: 0,
-//     sensitivity: 0.01 // Adjust for camera movement speed
-// };
-
-// // Camera movement with joystick without changing rotation
-// function moveCameraWithJoystick(deltaX, deltaY) {
-//     const forward = new THREE.Vector3();
-//     controls.getObject().getWorldDirection(forward);
-//     forward.y = 0;
-//     forward.normalize();
-
-//     const right = new THREE.Vector3();
-//     right.crossVectors(forward, new THREE.Vector3(0, 1, 0)).normalize();
-
-//     // Move forward/backward based on deltaY and strafe left/right based on deltaX
-//     controls.getObject().position.add(forward.multiplyScalar(-deltaY * joystick.sensitivity));
-//     controls.getObject().position.add(right.multiplyScalar(deltaX * joystick.sensitivity));
-// }
-
-// // Joystick touch events for movement
-// joystick.container.addEventListener("touchstart", (event) => {
-//     if (event.touches.length === 1) {
-//         joystick.isDragging = true;
-//         joystick.startX = event.touches[0].clientX;
-//         joystick.startY = event.touches[0].clientY;
-//     }
-// });
-
-// joystick.container.addEventListener("touchmove", (event) => {
-//     if (joystick.isDragging) {
-//         const touch = event.touches[0];
-//         joystick.deltaX = touch.clientX - joystick.startX;
-//         joystick.deltaY = touch.clientY - joystick.startY;
-
-//         // Move joystick handle
-//         joystick.handle.style.transform = `translate(${joystick.deltaX}px, ${joystick.deltaY}px)`;
-
-//         // Move camera based on joystick input
-//         moveCameraWithJoystick(joystick.deltaX, joystick.deltaY);
-//     }
-// });
-
-// joystick.container.addEventListener("touchend", () => {
-//     joystick.isDragging = false;
-//     joystick.deltaX = 0;
-//     joystick.deltaY = 0;
-//     joystick.handle.style.transform = 'translate(0, 0)';
-// });
-
 // ---------------------------------------- Section: Mobile View Panning and Joystick ---------------------------------------- //
 
 let touchStartX = 0;
@@ -878,7 +771,7 @@ const joystick = {
     deltaX: 0,
     deltaY: 0,
     maxDistance: 40,
-    sensitivity: 0.2, // Adjust for camera movement speed
+    sensitivity: 0.4, // Adjust for camera movement speed
     isActive: false     // Track if the joystick is being used
 };
 
