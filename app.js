@@ -36,10 +36,12 @@ setTimeout(fadeOutOverlay, 3000); // Adjust timing as needed
 // Setup the scene & camera
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-const renderer = new THREE.WebGLRenderer({ antialias: true });
+const renderer = new THREE.WebGLRenderer({ antialias: false });
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.shadowMap.enabled = true; // Enable shadow maps for the renderer
-renderer.shadowMap.type = THREE.PCFSoftShadowMap; // Use PCF Soft Shadows for better quality
+// renderer.shadowMap.type = THREE.PCFSoftShadowMap; // Use PCF Soft Shadows for better quality
+renderer.shadowMap.type = THREE.BasicShadowMap; // Use PCF Soft Shadows for better quality?
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5)); // Limit to 1.5 or even 1
 document.getElementById("gallery").appendChild(renderer.domElement);
 
 // Add a basic cube as a placeholder
