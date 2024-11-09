@@ -803,6 +803,8 @@ function moveCameraWithJoystick(deltaX, deltaY) {
 
 // Joystick touchstart event (assigns only if not already active)
 joystick.container.addEventListener("touchstart", (event) => {
+    // Prevent panning while moving
+    if (panningTouchId !== null) return;
     for (const touch of event.touches) {
         if (joystick.touchId === null) {
             joystick.isDragging = true;
@@ -816,6 +818,8 @@ joystick.container.addEventListener("touchstart", (event) => {
 
 // General touchstart event for panning (only if outside joystick and no active panning)
 window.addEventListener("touchstart", (event) => {
+    // Prevent moving while panning
+    if (joystick.isDragging) return;
     for (const touch of event.touches) {
         if (panningTouchId === null && !joystick.container.contains(touch.target)) {
             panningTouchId = touch.identifier;
