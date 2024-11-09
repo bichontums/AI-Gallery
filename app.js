@@ -817,7 +817,6 @@ joystick.container.addEventListener("touchstart", (event) => {
 // General touchstart event for panning (only if outside joystick and no active panning)
 window.addEventListener("touchstart", (event) => {
     for (const touch of event.touches) {
-        // Allow panning to reinitialize even after movement starts
         if (panningTouchId === null && !joystick.container.contains(touch.target)) {
             panningTouchId = touch.identifier;
             touchStartX = touch.clientX;
@@ -879,7 +878,7 @@ window.addEventListener("touchend", (event) => {
             joystick.handle.style.transform = 'translate(0, 0)';
             joystick.touchId = null;
         } else if (touch.identifier === panningTouchId) {
-            // Reset panning to allow reinitialization
+            // Reset panning and allow new panning touches
             panningTouchId = null;
         }
     }
