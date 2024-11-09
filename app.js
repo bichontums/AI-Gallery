@@ -870,15 +870,17 @@ window.addEventListener("touchmove", (event) => {
 // General touchend event to reset joystick and panning independently
 window.addEventListener("touchend", (event) => {
     for (const touch of event.changedTouches) {
+        // Reset joystick if necessary
         if (touch.identifier === joystick.touchId) {
-            // Reset joystick
             joystick.isDragging = false;
             joystick.deltaX = 0;
             joystick.deltaY = 0;
             joystick.handle.style.transform = 'translate(0, 0)';
             joystick.touchId = null;
-        } else if (touch.identifier === panningTouchId) {
-            // Reset panning and allow new panning touches
+        }
+        
+        // Reset panning if necessary
+        if (touch.identifier === panningTouchId) {
             panningTouchId = null;
         }
     }
@@ -894,6 +896,7 @@ function animateJoystickMovement() {
 
 // Start the joystick movement loop
 animateJoystickMovement();
+
 
 
 
