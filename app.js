@@ -751,6 +751,7 @@ document.body.appendChild(crosshair);
 
 // ---------------------------------------- Section: Mobile View Panning and Joystick ---------------------------------------- //
 
+
 const joystick = {
     container: document.getElementById("joystick-container"),
     handle: document.getElementById("joystick-handle"),
@@ -759,7 +760,7 @@ const joystick = {
     startY: 0,
     deltaX: 0,
     deltaY: 0,
-    sensitivity: 0.05,  // Adjust for camera movement speed
+    sensitivity: 0.45,  // Adjust for camera movement speed
     maxDistance: 40,    // Maximum distance joystick can move from center
     isActive: false,    // Track if joystick is being used
     touchId: null       // Track the touch ID for joystick control
@@ -819,6 +820,7 @@ joystick.container.addEventListener("touchstart", (event) => {
 window.addEventListener("touchmove", (event) => {
     for (const touch of event.touches) {
         if (touch.identifier === joystick.touchId && joystick.isDragging) {
+            // Handle joystick movement
             joystick.deltaX = touch.clientX - joystick.startX;
             joystick.deltaY = touch.clientY - joystick.startY;
 
@@ -896,6 +898,7 @@ function animateJoystickMovement() {
 
 // Start the joystick movement loop
 animateJoystickMovement();
+
 
 
 
