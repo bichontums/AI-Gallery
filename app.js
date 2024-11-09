@@ -734,7 +734,7 @@ controls.addEventListener('unlock', () => {
     console.log('PointerLockControls: unlocked');
 });
 
-scene.add(controls.getObject());
+scene.add(controls.object);
 
 // Add a simple pointer (crosshair) in the center of the viewport
 const crosshair = document.createElement('div');
@@ -789,7 +789,7 @@ function limitJoystickHandle(deltaX, deltaY) {
 // Function to move the camera continuously based on joystick position
 function moveCameraWithJoystick(deltaX, deltaY) {
     const forward = new THREE.Vector3();
-    controls.getObject().getWorldDirection(forward);
+    controls.object.getWorldDirection(forward);
     forward.y = 0; // Lock movement to the horizontal plane
     forward.normalize();
 
@@ -797,8 +797,8 @@ function moveCameraWithJoystick(deltaX, deltaY) {
     right.crossVectors(forward, new THREE.Vector3(0, 1, 0)).normalize();
 
     // Scale movement by joystick offset
-    controls.getObject().position.add(forward.multiplyScalar(-deltaY * joystick.sensitivity / joystick.maxDistance));
-    controls.getObject().position.add(right.multiplyScalar(deltaX * joystick.sensitivity / joystick.maxDistance));
+    controls.object.position.add(forward.multiplyScalar(-deltaY * joystick.sensitivity / joystick.maxDistance));
+    controls.object.position.add(right.multiplyScalar(deltaX * joystick.sensitivity / joystick.maxDistance));
 }
 
 // Joystick touchstart event (assigns only if not already active)
@@ -825,7 +825,7 @@ window.addEventListener("touchstart", (event) => {
             panningTouchId = touch.identifier;
             touchStartX = touch.clientX;
             touchStartY = touch.clientY;
-            initialQuaternion = controls.getObject().quaternion.clone();
+            initialQuaternion = controls.object().quaternion.clone();
             initialEuler = new THREE.Euler().setFromQuaternion(initialQuaternion, 'YXZ');
             break;
         }
@@ -866,7 +866,7 @@ window.addEventListener("touchmove", (event) => {
             newRotationX = Math.max(MAX_TILT_DOWN, Math.min(MAX_TILT_UP, newRotationX));
 
             const newEuler = new THREE.Euler(newRotationX, newRotationY, 0, 'YXZ');
-            controls.getObject().quaternion.setFromEuler(newEuler);
+            controls.object().quaternion.setFromEuler(newEuler);
         }
     }
 });
