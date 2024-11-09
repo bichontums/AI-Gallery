@@ -765,11 +765,11 @@ const joystick = {
 };
 
 // Panning variables
+let panningTouchId = null; // Track the touch ID for panning
 let touchStartX = 0;
 let touchStartY = 0;
 let initialQuaternion;
 let initialEuler;
-let panningTouchId = null; // Track the touch ID for panning
 
 const MAX_TILT_UP = Math.PI / 3;   // 60 degrees up
 const MAX_TILT_DOWN = -Math.PI / 3; // 60 degrees down
@@ -785,7 +785,7 @@ function limitJoystickHandle(deltaX, deltaY) {
     return { deltaX, deltaY };
 }
 
-// Function to move the camera continuously based on joystick position
+// Function to move the camera based on joystick position
 function moveCameraWithJoystick(deltaX, deltaY) {
     const forward = new THREE.Vector3();
     controls.getObject().getWorldDirection(forward);
@@ -800,7 +800,7 @@ function moveCameraWithJoystick(deltaX, deltaY) {
     controls.getObject().position.add(right.multiplyScalar(deltaX * joystick.sensitivity / joystick.maxDistance));
 }
 
-// Joystick touchstart event (assigns only if not already active)
+// Joystick touchstart event to initiate joystick movement
 joystick.container.addEventListener("touchstart", (event) => {
     for (const touch of event.touches) {
         if (joystick.touchId === null) {
@@ -816,7 +816,7 @@ joystick.container.addEventListener("touchstart", (event) => {
 // General touchstart event for panning (only if outside joystick and no active panning)
 window.addEventListener("touchstart", (event) => {
     for (const touch of event.touches) {
-        if (!joystick.container.contains(touch.target) && panningTouchId === null) {
+        if (panningTouchId === null && !joystick.container.contains(touch.target)) {
             panningTouchId = touch.identifier;
             touchStartX = touch.clientX;
             touchStartY = touch.clientY;
@@ -877,7 +877,7 @@ window.addEventListener("touchend", (event) => {
             joystick.handle.style.transform = 'translate(0, 0)';
             joystick.touchId = null;
         } else if (touch.identifier === panningTouchId) {
-            // Reset panning and allow new panning touches
+            // Reset panning
             panningTouchId = null;
         }
     }
@@ -893,7 +893,6 @@ function animateJoystickMovement() {
 
 // Start the joystick movement loop
 animateJoystickMovement();
-
 
 
 
