@@ -1,7 +1,7 @@
 // Import three.js
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js';
-import { PointerLockControls } from '../src/PointerLockControls.js';
-import { GLTFLoader } from '../src/GLTFLoader.js';
+import { PointerLockControls } from '/src/PointerLockControls.js';
+import { GLTFLoader } from '/src/GLTFLoader.js';
 
 
 // Import Firebase
@@ -57,15 +57,10 @@ const galleryDepth = 35;
 const textureLoader = new THREE.TextureLoader();
 
 // Load each texture from your file paths
-const woodTexture = textureLoader.load('../models/textures/gallery/WoodFloor039_1K-JPG_Color.jpg');           // Base color texture
-const woodNormalTexture = textureLoader.load('../models/textures/gallery/WoodFloor039_1K-JPG_NormalGL.jpg');    // Normal map
-const woodAOTexture = textureLoader.load('../models/textures/gallery/WoodFloor039_1K-JPG_AmbientOcclusion.jpg');            // Ambient Occlusion map
-const woodRoughnessTexture = textureLoader.load('../models/textures/gallery/WoodFloor039_1K-JPG_Roughness.jpg'); // Roughness map
-
-const concreteTexture = textureLoader.load('../models/textures/gallery/Plaster002_1K-JPG_Color.jpg');           // Base color texture
-const concreteNormalTexture = textureLoader.load('../models/textures/gallery/Plaster002_1K-JPG_NormalDX.jpg');    // Normal map
-const concreteAOTexture = textureLoader.load('../models/textures/gallery/Plaster-AmbientOcclusionMap.jpg');            // Ambient Occlusion map
-const concreteRoughnessTexture = textureLoader.load('../models/textures/gallery/Plaster002_1K-JPG_Roughness.jpg'); // Roughness map
+const woodTexture = textureLoader.load('/models/textures/gallery/WoodFloor039_1K-JPG_Color.jpg');           // Base color texture
+const woodNormalTexture = textureLoader.load('/models/textures/gallery/WoodFloor039_1K-JPG_NormalGL.jpg');    // Normal map
+const woodAOTexture = textureLoader.load('/models/textures/gallery/WoodFloor039_1K-JPG_AmbientOcclusion.jpg');            // Ambient Occlusion map
+const woodRoughnessTexture = textureLoader.load('/models/textures/gallery/WoodFloor039_1K-JPG_Roughness.jpg'); // Roughness map
 
 // Set texture wrapping and repeat as needed
 woodTexture.wrapS = THREE.RepeatWrapping;
@@ -76,15 +71,6 @@ woodAOTexture.wrapS = THREE.RepeatWrapping;
 woodAOTexture.wrapT = THREE.RepeatWrapping;
 woodRoughnessTexture.wrapS = THREE.RepeatWrapping;
 woodRoughnessTexture.wrapT = THREE.RepeatWrapping;
-
-concreteTexture.wrapS = THREE.RepeatWrapping;
-concreteTexture.wrapT = THREE.RepeatWrapping;
-concreteNormalTexture.wrapS = THREE.RepeatWrapping;
-concreteNormalTexture.wrapT = THREE.RepeatWrapping;
-concreteAOTexture.wrapS = THREE.RepeatWrapping;
-concreteAOTexture.wrapT = THREE.RepeatWrapping;
-concreteRoughnessTexture.wrapS = THREE.RepeatWrapping;
-concreteRoughnessTexture.wrapT = THREE.RepeatWrapping;
 
 // -------------- Create Floor -------------- //
 
@@ -273,7 +259,7 @@ windowPanelMesh.receiveShadow = true;  // Allow windows to receive some lighting
 scene.add(windowPanelMesh);
 
 // Load skybox
-textureLoader.load('../img/sky-2.jpg', function (texture) {
+textureLoader.load('/img/sky-2.jpg', function (texture) {
     texture.mapping = THREE.EquirectangularReflectionMapping; // Use equirectangular reflection mapping to create a smooth sky
     scene.background = texture;
 });
@@ -317,56 +303,56 @@ function loadModel(modelPath, scene, position = { x: 0, y: 0, z: 0 }, scale = 1,
 }
 
 // Load plants
-loadModel('../models/potted_plant_mediterranean_med_leaf_low_poly.glb', scene, { x: 14, y: 0, z: galleryWidth/2 + 1.5 }, 2);
-loadModel('../models/potted_plant_mediterranean_med_leaf_low_poly.glb', scene, { x: -14, y: 0, z: -galleryWidth/2 - 1.5 }, 2);
+loadModel('/models/potted_plant_mediterranean_med_leaf_low_poly.glb', scene, { x: 14, y: 0, z: galleryWidth/2 + 1.5 }, 2);
+loadModel('/models/potted_plant_mediterranean_med_leaf_low_poly.glb', scene, { x: -14, y: 0, z: -galleryWidth/2 - 1.5 }, 2);
 
 // Load benches
-loadModel('../models/granite_bench.glb', scene, { x: 7, y: 0.24, z: galleryWidth/2 + 1.6 }, 1.3);
-loadModel('../models/granite_bench.glb', scene, { x: -7, y: 0.24, z: galleryWidth/2 + 1.6 }, 1.3);
+loadModel('/models/granite_bench.glb', scene, { x: 7, y: 0.24, z: galleryWidth/2 + 1.6 }, 1.3);
+loadModel('/models/granite_bench.glb', scene, { x: -7, y: 0.24, z: galleryWidth/2 + 1.6 }, 1.3);
 
 // Load doors
-loadModel('../models/double_sliding_doors.glb', scene, { x: 14.95, y: 0, z: galleryWidth/2 }, 0.035, Math.PI/2);
-loadModel('../models/double_sliding_doors.glb', scene, { x: -14.65, y: 0, z: galleryWidth/2 }, 0.035, Math.PI/2);
+loadModel('/models/double_sliding_doors.glb', scene, { x: 14.95, y: 0, z: galleryWidth/2 }, 0.035, Math.PI/2);
+loadModel('/models/double_sliding_doors.glb', scene, { x: -14.65, y: 0, z: galleryWidth/2 }, 0.035, Math.PI/2);
 
 
 // Load small round lights
-loadModel('../models/cylinder_ceiling_light.glb', scene, { x: 7, y: galleryHeight, z: 14.5 }, 0.25);
-loadModel('../models/cylinder_ceiling_light.glb', scene, { x: -7, y: galleryHeight, z: 14.5 }, 0.25);
-loadModel('../models/cylinder_ceiling_light.glb', scene, { x: 7, y: galleryHeight, z: -14.5 }, 0.25);
-loadModel('../models/cylinder_ceiling_light.glb', scene, { x: -7, y: galleryHeight, z: -14.5 }, 0.25);
+loadModel('/models/cylinder_ceiling_light.glb', scene, { x: 7, y: galleryHeight, z: 14.5 }, 0.25);
+loadModel('/models/cylinder_ceiling_light.glb', scene, { x: -7, y: galleryHeight, z: 14.5 }, 0.25);
+loadModel('/models/cylinder_ceiling_light.glb', scene, { x: 7, y: galleryHeight, z: -14.5 }, 0.25);
+loadModel('/models/cylinder_ceiling_light.glb', scene, { x: -7, y: galleryHeight, z: -14.5 }, 0.25);
 
 // Load long ceiling lights
-loadModel('../models/ceiling_lamp.glb', scene, { x: 0, y: galleryHeight - 4.5, z: 14.5 }, 1.8);
-loadModel('../models/ceiling_lamp.glb', scene, { x: 0, y: galleryHeight - 4.5, z: 3.5 }, 1.8);
-loadModel('../models/ceiling_lamp.glb', scene, { x: 0, y: galleryHeight - 4.5, z: -3.5 }, 1.8);
-loadModel('../models/ceiling_lamp.glb', scene, { x: 0, y: galleryHeight - 4.5, z: -14.5 }, 1.8);
+loadModel('/models/ceiling_lamp.glb', scene, { x: 0, y: galleryHeight - 4.5, z: 14.5 }, 1.8);
+loadModel('/models/ceiling_lamp.glb', scene, { x: 0, y: galleryHeight - 4.5, z: 3.5 }, 1.8);
+loadModel('/models/ceiling_lamp.glb', scene, { x: 0, y: galleryHeight - 4.5, z: -3.5 }, 1.8);
+loadModel('/models/ceiling_lamp.glb', scene, { x: 0, y: galleryHeight - 4.5, z: -14.5 }, 1.8);
 
 // Load spotlights right
-loadModel('../models/rullo_lightstar_ceiling_lamp_1.glb', scene, { x: 13, y: galleryHeight - 0.5, z: -14.5 }, 0.002, -1);
-loadModel('../models/rullo_lightstar_ceiling_lamp_1.glb', scene, { x: 13, y: galleryHeight - 0.5, z: -7 }, 0.002, -1);
-loadModel('../models/rullo_lightstar_ceiling_lamp_1.glb', scene, { x: 13, y: galleryHeight - 0.5, z: 0 }, 0.002, 1);
-loadModel('../models/rullo_lightstar_ceiling_lamp_1.glb', scene, { x: 13, y: galleryHeight - 0.5, z: 7 }, 0.002, -1);
-loadModel('../models/rullo_lightstar_ceiling_lamp_1.glb', scene, { x: 13, y: galleryHeight - 0.5, z: 14.5 }, 0.002, 1);
+loadModel('/models/rullo_lightstar_ceiling_lamp_1.glb', scene, { x: 13, y: galleryHeight - 0.5, z: -14.5 }, 0.002, -1);
+loadModel('/models/rullo_lightstar_ceiling_lamp_1.glb', scene, { x: 13, y: galleryHeight - 0.5, z: -7 }, 0.002, -1);
+loadModel('/models/rullo_lightstar_ceiling_lamp_1.glb', scene, { x: 13, y: galleryHeight - 0.5, z: 0 }, 0.002, 1);
+loadModel('/models/rullo_lightstar_ceiling_lamp_1.glb', scene, { x: 13, y: galleryHeight - 0.5, z: 7 }, 0.002, -1);
+loadModel('/models/rullo_lightstar_ceiling_lamp_1.glb', scene, { x: 13, y: galleryHeight - 0.5, z: 14.5 }, 0.002, 1);
 
 // Load spotlights left
-loadModel('../models/rullo_lightstar_ceiling_lamp_1.glb', scene, { x: -13, y: galleryHeight - 0.5, z: -14.5 }, 0.002, -2);
-loadModel('../models/rullo_lightstar_ceiling_lamp_1.glb', scene, { x: -13, y: galleryHeight - 0.5, z: -7 }, 0.002, -2);
-loadModel('../models/rullo_lightstar_ceiling_lamp_1.glb', scene, { x: -13, y: galleryHeight - 0.5, z: 0 }, 0.002, 2);
-loadModel('../models/rullo_lightstar_ceiling_lamp_1.glb', scene, { x: -13, y: galleryHeight - 0.5, z: 7 }, 0.002, -2);
-loadModel('../models/rullo_lightstar_ceiling_lamp_1.glb', scene, { x: -13, y: galleryHeight - 0.5, z: 14.5 }, 0.002, 2);
+loadModel('/models/rullo_lightstar_ceiling_lamp_1.glb', scene, { x: -13, y: galleryHeight - 0.5, z: -14.5 }, 0.002, -2);
+loadModel('/models/rullo_lightstar_ceiling_lamp_1.glb', scene, { x: -13, y: galleryHeight - 0.5, z: -7 }, 0.002, -2);
+loadModel('/models/rullo_lightstar_ceiling_lamp_1.glb', scene, { x: -13, y: galleryHeight - 0.5, z: 0 }, 0.002, 2);
+loadModel('/models/rullo_lightstar_ceiling_lamp_1.glb', scene, { x: -13, y: galleryHeight - 0.5, z: 7 }, 0.002, -2);
+loadModel('/models/rullo_lightstar_ceiling_lamp_1.glb', scene, { x: -13, y: galleryHeight - 0.5, z: 14.5 }, 0.002, 2);
 
 // Load spotlights center
-loadModel('../models/rullo_lightstar_ceiling_lamp_1.glb', scene, { x: -4.3, y: galleryHeight - 0.5, z: -14.5 }, 0.002, -2);
-loadModel('../models/rullo_lightstar_ceiling_lamp_1.glb', scene, { x: -4.3, y: galleryHeight - 0.5, z: -7 }, 0.002, -2);
-loadModel('../models/rullo_lightstar_ceiling_lamp_1.glb', scene, { x: -4.3, y: galleryHeight - 0.5, z: 0 }, 0.002, 2);
-loadModel('../models/rullo_lightstar_ceiling_lamp_1.glb', scene, { x: -4.3, y: galleryHeight - 0.5, z: 7 }, 0.002, -2);
-loadModel('../models/rullo_lightstar_ceiling_lamp_1.glb', scene, { x: -4.3, y: galleryHeight - 0.5, z: 14.5 }, 0.002, 2);
+loadModel('/models/rullo_lightstar_ceiling_lamp_1.glb', scene, { x: -4.3, y: galleryHeight - 0.5, z: -14.5 }, 0.002, -2);
+loadModel('/models/rullo_lightstar_ceiling_lamp_1.glb', scene, { x: -4.3, y: galleryHeight - 0.5, z: -7 }, 0.002, -2);
+loadModel('/models/rullo_lightstar_ceiling_lamp_1.glb', scene, { x: -4.3, y: galleryHeight - 0.5, z: 0 }, 0.002, 2);
+loadModel('/models/rullo_lightstar_ceiling_lamp_1.glb', scene, { x: -4.3, y: galleryHeight - 0.5, z: 7 }, 0.002, -2);
+loadModel('/models/rullo_lightstar_ceiling_lamp_1.glb', scene, { x: -4.3, y: galleryHeight - 0.5, z: 14.5 }, 0.002, 2);
 
-loadModel('../models/rullo_lightstar_ceiling_lamp_1.glb', scene, { x: 4.3, y: galleryHeight - 0.5, z: -14.5 }, 0.002, -1);
-loadModel('../models/rullo_lightstar_ceiling_lamp_1.glb', scene, { x: 4.3, y: galleryHeight - 0.5, z: -7 }, 0.002, -1);
-loadModel('../models/rullo_lightstar_ceiling_lamp_1.glb', scene, { x: 4.3, y: galleryHeight - 0.5, z: 0 }, 0.002, 1);
-loadModel('../models/rullo_lightstar_ceiling_lamp_1.glb', scene, { x: 4.3, y: galleryHeight - 0.5, z: 7 }, 0.002, -1);
-loadModel('../models/rullo_lightstar_ceiling_lamp_1.glb', scene, { x: 4.3, y: galleryHeight - 0.5, z: 14.5 }, 0.002, 1);
+loadModel('/models/rullo_lightstar_ceiling_lamp_1.glb', scene, { x: 4.3, y: galleryHeight - 0.5, z: -14.5 }, 0.002, -1);
+loadModel('/models/rullo_lightstar_ceiling_lamp_1.glb', scene, { x: 4.3, y: galleryHeight - 0.5, z: -7 }, 0.002, -1);
+loadModel('/models/rullo_lightstar_ceiling_lamp_1.glb', scene, { x: 4.3, y: galleryHeight - 0.5, z: 0 }, 0.002, 1);
+loadModel('/models/rullo_lightstar_ceiling_lamp_1.glb', scene, { x: 4.3, y: galleryHeight - 0.5, z: 7 }, 0.002, -1);
+loadModel('/models/rullo_lightstar_ceiling_lamp_1.glb', scene, { x: 4.3, y: galleryHeight - 0.5, z: 14.5 }, 0.002, 1);
 
 
 // ---------------------------------------- Section: Lighting ---------------------------------------- //
@@ -506,7 +492,7 @@ createFramedArtwork(
 // Left inner block 1 back
 createFramedArtwork(
     2,
-    // '../img/sky.jpg',
+    // '/img/sky.jpg',
     'https://res.cloudinary.com/dsjopahtl/image/upload/v1730629010/beeb2_gm9gka.jpg', // Replace with your image URL
     0.05, // Frame depth
     { x: -7, y: 1.5, z: 6.7 }, // Position on the wall
@@ -527,7 +513,7 @@ createFramedArtwork(
 // Left inner block 2 back
 createFramedArtwork(
     4,
-    // '../img/sky.jpg',
+    // '/img/sky.jpg',
     'https://res.cloudinary.com/dsjopahtl/image/upload/v1730629012/beeb10_optimized_uwzapp.png', // Replace with your image URL
     0.05, // Frame depth
     { x: -7, y: 1.5, z: -7.3 }, // Position on the wall
@@ -538,7 +524,7 @@ createFramedArtwork(
 // Left inner block 3
 createFramedArtwork(
     5,
-    // '../img/sky.jpg',
+    // '/img/sky.jpg',
     'https://res.cloudinary.com/dsjopahtl/image/upload/v1730629012/bunny_kfwbzn.jpg', // Replace with your image URL
     0.05, // Frame depth
     { x: -7, y: 1.5, z: blockDepth - 0.2 }, // Position on the wall
@@ -548,7 +534,7 @@ createFramedArtwork(
 // Left inner block 3 back
 createFramedArtwork(
     6,
-    // '../img/sky.jpg',
+    // '/img/sky.jpg',
     'https://res.cloudinary.com/dsjopahtl/image/upload/v1730629013/bobby_fywpzl.png',
     0.05, // Frame depth
     { x: -7, y: 1.5, z: -0.3 }, // Position on the wall
@@ -558,7 +544,7 @@ createFramedArtwork(
 // Right inner block 1 front
 createFramedArtwork(
     7,
-    // '../img/sky.jpg',
+    // '/img/sky.jpg',
     'https://res.cloudinary.com/dsjopahtl/image/upload/v1730629011/beeb4_tqvsxy.jpg', // Replace with your image URL
     0.05, // Frame depth
     { x: 7, y: 1.5, z: blockDepth + 6.8 }, // Position on the wall
@@ -568,7 +554,7 @@ createFramedArtwork(
 // Right inner block 1 back
 createFramedArtwork(
     8,
-    // '../img/sky.jpg',
+    // '/img/sky.jpg',
     'https://res.cloudinary.com/dsjopahtl/image/upload/v1730629011/beeb5_tzqowu.jpg', // Replace with your image URL
     0.05, // Frame depth
     { x: 7, y: 1.5, z: 6.7 }, // Position on the wall
@@ -712,7 +698,7 @@ createFramedArtwork(
 
 createFramedArtwork(
     23,
-    // '../img/sky.jpg',
+    // '/img/sky.jpg',
     'https://res.cloudinary.com/dsjopahtl/image/upload/v1730629011/beeb6_ufqxwn.jpg', // Replace with your image URL
     0.05, // Frame depth
     { x: 0, y: 2.9, z: -17.2 }, // Position on the wall
@@ -724,7 +710,7 @@ createFramedArtwork(
 
 createFramedArtwork(
     24,
-    // '../img/sky.jpg',
+    // '/img/sky.jpg',
     'https://res.cloudinary.com/dsjopahtl/image/upload/v1730629013/beeb12_da3pn9.jpg', // Replace with your image URL
     0.05, // Frame depth
     { x: 0, y: 2.8, z: 17.2 }, // Position on the wall
@@ -903,7 +889,7 @@ function onPointerClick(event) {
             //     artist: "Jane Doe",
             //     date: "2023-05-14",
             //     description: "This is a description of the beautiful artwork.",
-            //     imageURL: "../img/sky.jpg"
+            //     imageURL: "/img/sky.jpg"
             // });
             // console.log("Overlay open sesame");
         }
@@ -1257,13 +1243,13 @@ function loadVisitorModel(visitorId, modelPath, scaleX, scaleY, scaleZ, position
 }
 
 // Load Marshal
-loadVisitorModel(1, '../models/marshal.gltf', 0.18, 0.18, 0.18, -0.2, '../img/marshal.png', 'Marshal', 'A fan of kool art');
+loadVisitorModel(1, '/models/marshal.gltf', 0.18, 0.18, 0.18, -0.2, '/img/marshal.png', 'Marshal', 'A fan of kool art');
 // Load Isabelle
-loadVisitorModel(2, '../models/isabelle.gltf', 0.017, 0.017, 0.017, 0.05, '../img/isabelle.png', 'Isabelle', 'I love visiting galleries!');
+loadVisitorModel(2, '/models/isabelle.gltf', 0.017, 0.017, 0.017, 0.05, '/img/isabelle.png', 'Isabelle', 'I love visiting galleries!');
 // Load agent S
-loadVisitorModel(3, '../models/agent_s.gltf', 7, 7, 7, 0.01, '../img/agents.png', 'Agent Hammy', 'Why am I here?');
+loadVisitorModel(3, '/models/agent_s.gltf', 7, 7, 7, 0.01, '/img/agents.png', 'Agent Hammy', 'Why am I here?');
 // Load Celeste
-loadVisitorModel(4, '../models/celeste.gltf', 0.045, 0.045, 0.045, 0.02, '../img/celeste.png', 'Celeste', 'I love quacking');
+loadVisitorModel(4, '/models/celeste.gltf', 0.045, 0.045, 0.045, 0.02, '/img/celeste.png', 'Celeste', 'I love quacking');
 
 
 // ---------------------------------------- Section: Chat with Visitors ---------------------------------------- //
