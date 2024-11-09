@@ -762,7 +762,6 @@ const joystick = {
     deltaY: 0,
     sensitivity: 0.45,  // Adjust for camera movement speed
     maxDistance: 40,    // Maximum distance joystick can move from center
-    isActive: false,    // Track if joystick is being used
     touchId: null       // Track the touch ID for joystick control
 };
 
@@ -802,15 +801,28 @@ function moveCameraWithJoystick(deltaX, deltaY) {
     controls.getObject().position.add(right.multiplyScalar(deltaX * joystick.sensitivity / joystick.maxDistance));
 }
 
-// Joystick touchstart event
+// Joystick touchstart event (assigns only if not already active)
 joystick.container.addEventListener("touchstart", (event) => {
     for (const touch of event.touches) {
-        if (joystick.touchId === null) { // Only assign if not already assigned
+        if (joystick.touchId === null) {
             joystick.isDragging = true;
-            joystick.isActive = true;
             joystick.touchId = touch.identifier;
             joystick.startX = touch.clientX;
             joystick.startY = touch.clientY;
+            break;
+        }
+    }
+});
+
+// General touchstart event for panning (only if outside joystick and no active panning)
+window.addEventListener("touchstart", (event) => {
+    for (const touch of event.touches) {
+        if (panningTouchId === null && !joystick.container.contains(touch.target)) {
+            panningTouchId = touch.identifier;
+            touchStartX = touch.clientX;
+            touchStartY = touch.clientY;
+            initialQuaternion = controls.getObject().quaternion.clone();
+            initialEuler = new THREE.Euler().setFromQuaternion(initialQuaternion, 'YXZ');
             break;
         }
     }
@@ -832,7 +844,7 @@ window.addEventListener("touchmove", (event) => {
             // Move joystick handle visually within limited area
             joystick.handle.style.transform = `translate(${joystick.deltaX}px, ${joystick.deltaY}px)`;
         } else if (touch.identifier === panningTouchId) {
-            // Handle camera rotation (panning) separately
+            // Handle panning
             const touchEndX = touch.clientX;
             const touchEndY = touch.clientY;
 
@@ -855,13 +867,12 @@ window.addEventListener("touchmove", (event) => {
     }
 });
 
-// General touchend event to reset joystick and panning when each is released
+// General touchend event to reset joystick and panning independently
 window.addEventListener("touchend", (event) => {
     for (const touch of event.changedTouches) {
         if (touch.identifier === joystick.touchId) {
             // Reset joystick
             joystick.isDragging = false;
-            joystick.isActive = false;
             joystick.deltaX = 0;
             joystick.deltaY = 0;
             joystick.handle.style.transform = 'translate(0, 0)';
@@ -873,24 +884,9 @@ window.addEventListener("touchend", (event) => {
     }
 });
 
-// Panning (rotation) touchstart outside of joystick
-window.addEventListener("touchstart", (event) => {
-    for (const touch of event.touches) {
-        // Only start panning if touch is outside joystick container and panning is not already active
-        if (!joystick.container.contains(event.target) && panningTouchId === null) {
-            panningTouchId = touch.identifier;
-            touchStartX = touch.clientX;
-            touchStartY = touch.clientY;
-            initialQuaternion = controls.getObject().quaternion.clone();
-            initialEuler = new THREE.Euler().setFromQuaternion(initialQuaternion, 'YXZ');
-            break;
-        }
-    }
-});
-
 // Animation loop for continuous camera movement based on joystick
 function animateJoystickMovement() {
-    if (joystick.isActive && (joystick.deltaX !== 0 || joystick.deltaY !== 0)) {
+    if (joystick.isDragging && (joystick.deltaX !== 0 || joystick.deltaY !== 0)) {
         moveCameraWithJoystick(joystick.deltaX, joystick.deltaY);
     }
     requestAnimationFrame(animateJoystickMovement);
@@ -898,6 +894,7 @@ function animateJoystickMovement() {
 
 // Start the joystick movement loop
 animateJoystickMovement();
+
 
 
 
