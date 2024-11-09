@@ -751,6 +751,8 @@ document.body.appendChild(crosshair);
 
 // ---------------------------------------- Section: Mobile View Panning and Joystick ---------------------------------------- //
 
+// ---------------------------------------- Section: Joystick Controls ---------------------------------------- //
+
 const joystick = {
     container: document.getElementById("joystick-container"),
     handle: document.getElementById("joystick-handle"),
@@ -759,12 +761,13 @@ const joystick = {
     startY: 0,
     deltaX: 0,
     deltaY: 0,
-    sensitivity: 0.4,  // Adjust for camera movement speed
+    sensitivity: 0.45,  // Adjust for camera movement speed
     maxDistance: 40,    // Maximum distance joystick can move from center
+    isActive: false,    // Track if joystick is being used
     touchId: null       // Track the touch ID for joystick control
 };
 
-// Variables for panning
+// Panning variables
 let touchStartX = 0;
 let touchStartY = 0;
 let initialQuaternion;
@@ -774,7 +777,7 @@ let panningTouchId = null; // Track the touch ID for panning
 const MAX_TILT_UP = Math.PI / 3;   // 60 degrees up
 const MAX_TILT_DOWN = -Math.PI / 3; // 60 degrees down
 
-// Limit joystick handle movement within max distance
+// Function to limit joystick handle movement within max distance
 function limitJoystickHandle(deltaX, deltaY) {
     const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
     if (distance > joystick.maxDistance) {
@@ -804,6 +807,7 @@ function moveCameraWithJoystick(deltaX, deltaY) {
 joystick.container.addEventListener("touchstart", (event) => {
     const touch = event.touches[0];
     joystick.isDragging = true;
+    joystick.isActive = true;
     joystick.touchId = touch.identifier;
     joystick.startX = touch.clientX;
     joystick.startY = touch.clientY;
@@ -853,6 +857,7 @@ window.addEventListener("touchend", (event) => {
         if (touch.identifier === joystick.touchId) {
             // Reset joystick
             joystick.isDragging = false;
+            joystick.isActive = false;
             joystick.deltaX = 0;
             joystick.deltaY = 0;
             joystick.handle.style.transform = 'translate(0, 0)';
@@ -883,7 +888,7 @@ window.addEventListener("touchstart", (event) => {
 
 // Animation loop for continuous camera movement based on joystick
 function animateJoystickMovement() {
-    if (joystick.isDragging && (joystick.deltaX !== 0 || joystick.deltaY !== 0)) {
+    if (joystick.isActive && (joystick.deltaX !== 0 || joystick.deltaY !== 0)) {
         moveCameraWithJoystick(joystick.deltaX, joystick.deltaY);
     }
     requestAnimationFrame(animateJoystickMovement);
@@ -891,6 +896,7 @@ function animateJoystickMovement() {
 
 // Start the joystick movement loop
 animateJoystickMovement();
+
 
 
 
