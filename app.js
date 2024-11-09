@@ -752,6 +752,8 @@ document.body.appendChild(crosshair);
 // ---------------------------------------- Section: Mobile View Panning and Joystick ---------------------------------------- //
 
 
+// ---------------------------------------- Section: Joystick Controls ---------------------------------------- //
+
 const joystick = {
     container: document.getElementById("joystick-container"),
     handle: document.getElementById("joystick-handle"),
@@ -817,7 +819,7 @@ joystick.container.addEventListener("touchstart", (event) => {
 // General touchstart event for panning (only if outside joystick and no active panning)
 window.addEventListener("touchstart", (event) => {
     for (const touch of event.touches) {
-        if (panningTouchId === null && !joystick.container.contains(touch.target)) {
+        if (!joystick.container.contains(touch.target) && panningTouchId === null) {
             panningTouchId = touch.identifier;
             touchStartX = touch.clientX;
             touchStartY = touch.clientY;
@@ -894,6 +896,7 @@ function animateJoystickMovement() {
 
 // Start the joystick movement loop
 animateJoystickMovement();
+
 
 
 
