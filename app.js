@@ -423,10 +423,7 @@ cornerLight4.castShadow = true;
 scene.add(cornerLight4);
 
 
-
 // ---------------------------------------- Section: Artwork ---------------------------------------- //
-
-// Placeholders (where Firebase art will come later)
 
 // Function to create framed artwork
 const framedArtworks = {};
@@ -749,7 +746,114 @@ crosshair.style.transform = 'translate(-50%, -50%)';
 crosshair.style.pointerEvents = 'none';
 document.body.appendChild(crosshair);
 
-// Mobile view panning
+// // Mobile view panning
+
+// let touchStartX = 0;
+// let touchStartY = 0;
+// let initialQuaternion;
+// let initialEuler;
+
+// const MAX_TILT_UP = Math.PI / 3;   // 60 degrees up
+// const MAX_TILT_DOWN = -Math.PI / 3; // 60 degrees down
+
+// window.addEventListener("touchstart", (event) => {
+//     if (event.touches.length === 1) { // Single finger touch
+//         touchStartX = event.touches[0].pageX;
+//         touchStartY = event.touches[0].pageY;
+
+//         // Store the initial quaternion and Euler angles
+//         initialQuaternion = controls.getObject().quaternion.clone();
+//         initialEuler = new THREE.Euler().setFromQuaternion(initialQuaternion, 'YXZ');
+//     }
+// });
+
+// window.addEventListener("touchmove", (event) => {
+//     if (event.touches.length === 1) { // Single finger drag
+//         const touchEndX = event.touches[0].pageX;
+//         const touchEndY = event.touches[0].pageY;
+
+//         // Calculate the movement delta
+//         const deltaX = touchEndX - touchStartX;
+//         const deltaY = touchEndY - touchStartY;
+
+//         // Adjust these for sensitivity of rotation
+//         const rotationSpeedX = 0.005; // Horizontal sensitivity
+//         const rotationSpeedY = 0.005; // Vertical sensitivity
+
+//         // Calculate new rotation angles
+//         const newRotationY = initialEuler.y - deltaX * rotationSpeedX; // Left-right rotation (yaw)
+//         let newRotationX = initialEuler.x - deltaY * rotationSpeedY;   // Up-down rotation (pitch)
+
+//         // Clamp the up-down rotation (pitch) to prevent flipping
+//         newRotationX = Math.max(MAX_TILT_DOWN, Math.min(MAX_TILT_UP, newRotationX));
+
+//         // Apply the new rotations using an Euler object
+//         const newEuler = new THREE.Euler(newRotationX, newRotationY, 0, 'YXZ');
+        
+//         // Update the camera's quaternion based on the new Euler angles
+//         controls.getObject().quaternion.setFromEuler(newEuler);
+//     }
+// });
+
+// // ---------------------------------------- Section: Joystick Controls ---------------------------------------- //
+
+// const joystick = {
+//     container: document.getElementById("joystick-container"),
+//     handle: document.getElementById("joystick-handle"),
+//     isDragging: false,
+//     startX: 0,
+//     startY: 0,
+//     deltaX: 0,
+//     deltaY: 0,
+//     sensitivity: 0.01 // Adjust for camera movement speed
+// };
+
+// // Camera movement with joystick without changing rotation
+// function moveCameraWithJoystick(deltaX, deltaY) {
+//     const forward = new THREE.Vector3();
+//     controls.getObject().getWorldDirection(forward);
+//     forward.y = 0;
+//     forward.normalize();
+
+//     const right = new THREE.Vector3();
+//     right.crossVectors(forward, new THREE.Vector3(0, 1, 0)).normalize();
+
+//     // Move forward/backward based on deltaY and strafe left/right based on deltaX
+//     controls.getObject().position.add(forward.multiplyScalar(-deltaY * joystick.sensitivity));
+//     controls.getObject().position.add(right.multiplyScalar(deltaX * joystick.sensitivity));
+// }
+
+// // Joystick touch events for movement
+// joystick.container.addEventListener("touchstart", (event) => {
+//     if (event.touches.length === 1) {
+//         joystick.isDragging = true;
+//         joystick.startX = event.touches[0].clientX;
+//         joystick.startY = event.touches[0].clientY;
+//     }
+// });
+
+// joystick.container.addEventListener("touchmove", (event) => {
+//     if (joystick.isDragging) {
+//         const touch = event.touches[0];
+//         joystick.deltaX = touch.clientX - joystick.startX;
+//         joystick.deltaY = touch.clientY - joystick.startY;
+
+//         // Move joystick handle
+//         joystick.handle.style.transform = `translate(${joystick.deltaX}px, ${joystick.deltaY}px)`;
+
+//         // Move camera based on joystick input
+//         moveCameraWithJoystick(joystick.deltaX, joystick.deltaY);
+//     }
+// });
+
+// joystick.container.addEventListener("touchend", () => {
+//     joystick.isDragging = false;
+//     joystick.deltaX = 0;
+//     joystick.deltaY = 0;
+//     joystick.handle.style.transform = 'translate(0, 0)';
+// });
+
+// ---------------------------------------- Section: Mobile View Panning and Joystick ---------------------------------------- //
 
 let touchStartX = 0;
 let touchStartY = 0;
@@ -759,54 +863,152 @@ let initialEuler;
 const MAX_TILT_UP = Math.PI / 3;   // 60 degrees up
 const MAX_TILT_DOWN = -Math.PI / 3; // 60 degrees down
 
+// Flag to detect if two-finger control is active
+let isTwoFingerTouch = false;
+
+// Joystick setup for movement
+const joystick = {
+    container: document.getElementById("joystick-container"),
+    handle: document.getElementById("joystick-handle"),
+    isDragging: false,
+    startX: 0,
+    startY: 0,
+    deltaX: 0,
+    deltaY: 0,
+    sensitivity: 0.01 // Adjust for camera movement speed
+};
+
+// Camera movement with joystick (x and z only)
+function moveCameraWithJoystick(deltaX, deltaY) {
+    const forward = new THREE.Vector3();
+    controls.getObject().getWorldDirection(forward);
+    forward.y = 0; // Lock movement to the horizontal plane
+    forward.normalize();
+
+    const right = new THREE.Vector3();
+    right.crossVectors(forward, new THREE.Vector3(0, 1, 0)).normalize();
+
+    // Update camera position for forward/backward and strafe movements
+    controls.getObject().position.add(forward.multiplyScalar(-deltaY * joystick.sensitivity));
+    controls.getObject().position.add(right.multiplyScalar(deltaX * joystick.sensitivity));
+}
+
+// Touchstart for joystick
+joystick.container.addEventListener("touchstart", (event) => {
+    if (event.touches.length === 1) {
+        joystick.isDragging = true;
+        joystick.startX = event.touches[0].clientX;
+        joystick.startY = event.touches[0].clientY;
+    }
+});
+
+joystick.container.addEventListener("touchmove", (event) => {
+    if (joystick.isDragging) {
+        const touch = event.touches[0];
+        joystick.deltaX = touch.clientX - joystick.startX;
+        joystick.deltaY = touch.clientY - joystick.startY;
+
+        // Move joystick handle and camera
+        joystick.handle.style.transform = `translate(${joystick.deltaX}px, ${joystick.deltaY}px)`;
+        moveCameraWithJoystick(joystick.deltaX, joystick.deltaY);
+    }
+});
+
+joystick.container.addEventListener("touchend", () => {
+    joystick.isDragging = false;
+    joystick.deltaX = 0;
+    joystick.deltaY = 0;
+    joystick.handle.style.transform = 'translate(0, 0)';
+});
+
+// Touch handling for camera panning/rotation
 window.addEventListener("touchstart", (event) => {
-    if (event.touches.length === 1) { // Single finger touch
+    if (event.touches.length === 2) {
+        isTwoFingerTouch = true; // Enable two-finger control mode
+    } else if (event.touches.length === 1 && !joystick.isDragging) {
+        // Single-finger panning (rotation)
         touchStartX = event.touches[0].pageX;
         touchStartY = event.touches[0].pageY;
 
-        // Store the initial quaternion and Euler angles
         initialQuaternion = controls.getObject().quaternion.clone();
         initialEuler = new THREE.Euler().setFromQuaternion(initialQuaternion, 'YXZ');
     }
 });
 
 window.addEventListener("touchmove", (event) => {
-    if (event.touches.length === 1) { // Single finger drag
+    if (!isTwoFingerTouch && event.touches.length === 1 && !joystick.isDragging) {
+        // Handle rotation with single-finger drag
         const touchEndX = event.touches[0].pageX;
         const touchEndY = event.touches[0].pageY;
 
-        // Calculate the movement delta
         const deltaX = touchEndX - touchStartX;
         const deltaY = touchEndY - touchStartY;
 
-        // Adjust these for sensitivity of rotation
-        const rotationSpeedX = 0.005; // Horizontal sensitivity
-        const rotationSpeedY = 0.005; // Vertical sensitivity
+        const rotationSpeedX = 0.005;
+        const rotationSpeedY = 0.005;
 
         // Calculate new rotation angles
-        const newRotationY = initialEuler.y - deltaX * rotationSpeedX; // Left-right rotation (yaw)
-        let newRotationX = initialEuler.x - deltaY * rotationSpeedY;   // Up-down rotation (pitch)
+        const newRotationY = initialEuler.y - deltaX * rotationSpeedX;
+        let newRotationX = initialEuler.x - deltaY * rotationSpeedY;
 
-        // Clamp the up-down rotation (pitch) to prevent flipping
+        // Clamp rotation to prevent flipping
         newRotationX = Math.max(MAX_TILT_DOWN, Math.min(MAX_TILT_UP, newRotationX));
 
-        // Apply the new rotations using an Euler object
         const newEuler = new THREE.Euler(newRotationX, newRotationY, 0, 'YXZ');
-        
-        // Update the camera's quaternion based on the new Euler angles
         controls.getObject().quaternion.setFromEuler(newEuler);
     }
 });
 
+window.addEventListener("touchend", (event) => {
+    if (event.touches.length < 2) {
+        isTwoFingerTouch = false; // Reset two-finger mode
+    }
+});
 
 
+// ---------------------------------------- Section: Movement around the gallery ---------------------------------------- //
 
+// Movement flags
+let moveForward = false;
+let moveBackward = false;
+let moveLeft = false;
+let moveRight = false;
 
+// Event listeners for key press and release
+document.addEventListener("keydown", (event) => {
+    if (chatOpen) return; // Disable movement when chat is open
+    switch (event.key) {
+        case "w":
+            moveForward = true;
+            break;
+        case "s":
+            moveBackward = true;
+            break;
+        case "a":
+            moveLeft = true;
+            break;
+        case "d":
+            moveRight = true;
+            break;
+    }
+});
 
-
-
-
-
+document.addEventListener("keyup", (event) => {
+    switch (event.key) {
+        case "w":
+            moveForward = false;
+            break;
+        case "s":
+            moveBackward = false;
+            break;
+        case "a":
+            moveLeft = false;
+            break;
+        case "d":
+            moveRight = false;
+            break;
+    }
+});
 
 
 
@@ -1005,82 +1207,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-// ---------------------------------------- Section: Movement around the gallery ---------------------------------------- //
-
-// Movement flags
-let moveForward = false;
-let moveBackward = false;
-let moveLeft = false;
-let moveRight = false;
-
-// Event listeners for key press and release
-document.addEventListener("keydown", (event) => {
-    if (chatOpen) return; // Disable movement when chat is open
-    switch (event.key) {
-        case "w":
-            moveForward = true;
-            break;
-        case "s":
-            moveBackward = true;
-            break;
-        case "a":
-            moveLeft = true;
-            break;
-        case "d":
-            moveRight = true;
-            break;
-    }
-});
-
-document.addEventListener("keyup", (event) => {
-    switch (event.key) {
-        case "w":
-            moveForward = false;
-            break;
-        case "s":
-            moveBackward = false;
-            break;
-        case "a":
-            moveLeft = false;
-            break;
-        case "d":
-            moveRight = false;
-            break;
-    }
-});
-
 // ---------------------------------------- Section: Create AI Visitors & get them moving ---------------------------------------- //
-
-// // Create basic 3D blocks as visitors first
-// function createVisitor(id, color) {
-//     const visitorGeometry = new THREE.BoxGeometry(0.5, 1, 0.5); // Simple box for the visitor
-//     const visitorMaterial = new THREE.MeshStandardMaterial({ color });
-//     const visitor = new THREE.Mesh(visitorGeometry, visitorMaterial);
-
-//     // Create an indicator to highlight the 'front' of the visitor
-//     const frontIndicatorGeometry = new THREE.CylinderGeometry(0.05, 0.05, 0.2);
-//     const frontIndicatorMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 }); // Red to clearly indicate the front
-//     const frontIndicator = new THREE.Mesh(frontIndicatorGeometry, frontIndicatorMaterial);
-//     frontIndicator.position.set(0, 0.6, 0.3); // Place the indicator slightly in front and above the visitor
-//     visitor.add(frontIndicator);
-
-//     // Position the visitor randomly within the gallery bounds
-//     visitor.position.set(
-//         THREE.MathUtils.randFloatSpread(10), // Random X within bounds
-//         0.5, // Set to half the height
-//         THREE.MathUtils.randFloatSpread(10) // Random Z within bounds
-//     );
-
-//     visitor.userData = {
-//         id: id,
-//         currentArtwork: null, // The artwork the AI visitor is viewing
-//         isMoving: true, // Track if the visitor is in motion
-//         waypointIndex: 0 // Track current waypoint
-//     };
-
-//     scene.add(visitor);
-//     return visitor;
-// }
 
 // Create a few visitors with random colors
 const visitors = [
@@ -1184,12 +1311,13 @@ function startVisitorCountdown(visitor, visitorIndex) {
 }
 
 // Delay starting the visitors until artworks are loaded
+
 setTimeout(() => {
     visitors.forEach((visitor, index) => {
         console.log(`Starting movement for visitor ${visitor.userData.id}`);
         moveVisitorToArtwork(visitor, index);
     });
-}, 5000); // Delay by 2 seconds to ensure artworks are ready
+}, 7500); // Delay by 2 seconds to ensure artworks are ready
 
 
 // ---------------------------------------- Section: Create Visitors with Models ---------------------------------------- //
