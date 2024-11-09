@@ -14,9 +14,10 @@ const loader = new GLTFLoader();
 // ---------------------------------------- Section: Welcome ---------------------------------------- //
 
 // Ensure this function runs after the scene has loaded or a delay
+const joystickContainer = document.getElementById("joystick-container");
+
 function fadeOutOverlay() {
     const overlay = document.getElementById("welcomeOverlay");
-    const joystickContainer = document.getElementById("joystick-container");
     overlay.style.opacity = '0'; // Trigger CSS transition to fade out
 
     // Remove overlay from display after fade-out completes
@@ -750,8 +751,6 @@ document.body.appendChild(crosshair);
 
 // ---------------------------------------- Section: Mobile View Panning and Joystick ---------------------------------------- //
 
-// ---------------------------------------- Section: Joystick Controls ---------------------------------------- //
-
 const joystick = {
     container: document.getElementById("joystick-container"),
     handle: document.getElementById("joystick-handle"),
@@ -760,9 +759,8 @@ const joystick = {
     startY: 0,
     deltaX: 0,
     deltaY: 0,
-    sensitivity: 0.05,  // Adjust for camera movement speed
+    sensitivity: 0.4,  // Adjust for camera movement speed
     maxDistance: 40,    // Maximum distance joystick can move from center
-    isActive: false,    // Track if the joystick is being used
     touchId: null       // Track the touch ID for joystick control
 };
 
@@ -776,7 +774,7 @@ let panningTouchId = null; // Track the touch ID for panning
 const MAX_TILT_UP = Math.PI / 3;   // 60 degrees up
 const MAX_TILT_DOWN = -Math.PI / 3; // 60 degrees down
 
-// Function to limit joystick handle movement within max distance
+// Limit joystick handle movement within max distance
 function limitJoystickHandle(deltaX, deltaY) {
     const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
     if (distance > joystick.maxDistance) {
@@ -804,17 +802,14 @@ function moveCameraWithJoystick(deltaX, deltaY) {
 
 // Joystick touchstart event
 joystick.container.addEventListener("touchstart", (event) => {
-    if (event.touches.length > 0) {
-        const touch = event.touches[0];
-        joystick.isDragging = true;
-        joystick.isActive = true;
-        joystick.touchId = touch.identifier;
-        joystick.startX = touch.clientX;
-        joystick.startY = touch.clientY;
-    }
+    const touch = event.touches[0];
+    joystick.isDragging = true;
+    joystick.touchId = touch.identifier;
+    joystick.startX = touch.clientX;
+    joystick.startY = touch.clientY;
 });
 
-// Joystick touchmove event (updates delta without moving camera directly)
+// Joystick touchmove event (runs independently of panning)
 window.addEventListener("touchmove", (event) => {
     for (const touch of event.touches) {
         if (touch.identifier === joystick.touchId && joystick.isDragging) {
@@ -828,8 +823,6 @@ window.addEventListener("touchmove", (event) => {
 
             // Move joystick handle visually within limited area
             joystick.handle.style.transform = `translate(${joystick.deltaX}px, ${joystick.deltaY}px)`;
-
-            // Camera movement handled in animation loop below
         } else if (touch.identifier === panningTouchId) {
             // Handle camera rotation (panning) separately
             const touchEndX = touch.clientX;
@@ -860,7 +853,6 @@ window.addEventListener("touchend", (event) => {
         if (touch.identifier === joystick.touchId) {
             // Reset joystick
             joystick.isDragging = false;
-            joystick.isActive = false;
             joystick.deltaX = 0;
             joystick.deltaY = 0;
             joystick.handle.style.transform = 'translate(0, 0)';
@@ -872,23 +864,26 @@ window.addEventListener("touchend", (event) => {
     }
 });
 
-// Start panning on touch outside of the joystick area
+// Panning (rotation) touchstart outside of joystick
 window.addEventListener("touchstart", (event) => {
-    for (const touch of event.touches) {
-        if (!joystick.isDragging && event.target !== joystick.container) {
-            // Start panning if touch is not within joystick
-            panningTouchId = touch.identifier;
-            touchStartX = touch.clientX;
-            touchStartY = touch.clientY;
-            initialQuaternion = controls.getObject().quaternion.clone();
-            initialEuler = new THREE.Euler().setFromQuaternion(initialQuaternion, 'YXZ');
+    if (panningTouchId === null) {
+        for (const touch of event.touches) {
+            // Only start panning if touch is outside joystick container
+            if (!joystick.container.contains(event.target)) {
+                panningTouchId = touch.identifier;
+                touchStartX = touch.clientX;
+                touchStartY = touch.clientY;
+                initialQuaternion = controls.getObject().quaternion.clone();
+                initialEuler = new THREE.Euler().setFromQuaternion(initialQuaternion, 'YXZ');
+                break;
+            }
         }
     }
 });
 
 // Animation loop for continuous camera movement based on joystick
 function animateJoystickMovement() {
-    if (joystick.isActive && (joystick.deltaX !== 0 || joystick.deltaY !== 0)) {
+    if (joystick.isDragging && (joystick.deltaX !== 0 || joystick.deltaY !== 0)) {
         moveCameraWithJoystick(joystick.deltaX, joystick.deltaY);
     }
     requestAnimationFrame(animateJoystickMovement);
@@ -896,6 +891,7 @@ function animateJoystickMovement() {
 
 // Start the joystick movement loop
 animateJoystickMovement();
+
 
 
 // ---------------------------------------- Section: Movement around the gallery ---------------------------------------- //
@@ -1404,6 +1400,9 @@ function showChatOverlay(profilePic, name, desc) {
     // Show the chat widget
     chatOverlay.classList.add("visible");
     chatOverlay.classList.remove("hidden");
+
+    // Hide the joystick
+    joystickContainer.style.display = 'none';
 }
 
 // Pan camera to show the visitor on the left and chat on the right
@@ -1469,6 +1468,8 @@ function closeChatOverlay() {
             }
         });
     }
+
+    joystickContainer.style.display = 'block';
 
     controls.lock(); // Re-lock controls for movement
 }
