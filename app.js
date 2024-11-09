@@ -502,7 +502,7 @@ createFramedArtwork(
 // Left inner block 2
 createFramedArtwork(
     3,
-    'https://res.cloudinary.com/dsjopahtl/image/upload/v1730629012/beeb9_optimized_spczzb.png',
+    'https://res.cloudinary.com/dsjopahtl/image/upload/v1731164113/beeb9_optimized_spczzb_cbpsy9.jpg',
     // 'https://awsimages.detik.net.id/community/media/visual/2024/09/12/ilustrasi-boneka-labubu_169.jpeg?w=600&q=90', // Replace with your image URL
     0.05, // Frame depth
     { x: -7, y: 1.5, z: blockDepth - 7.2 }, // Position on the wall
@@ -514,7 +514,7 @@ createFramedArtwork(
 createFramedArtwork(
     4,
     // './img/sky.jpg',
-    'https://res.cloudinary.com/dsjopahtl/image/upload/v1730629012/beeb10_optimized_uwzapp.png', // Replace with your image URL
+    'https://res.cloudinary.com/dsjopahtl/image/upload/v1731164114/beeb10_optimized_uwzapp_nxs7p8.jpg', // Replace with your image URL
     0.05, // Frame depth
     { x: -7, y: 1.5, z: -7.3 }, // Position on the wall
     { x: 0, y: Math.PI, z: 0 }, // Rotation
@@ -535,7 +535,7 @@ createFramedArtwork(
 createFramedArtwork(
     6,
     // './img/sky.jpg',
-    'https://res.cloudinary.com/dsjopahtl/image/upload/v1731162461/Galaxy_gynx7g.jpg',
+    'https://res.cloudinary.com/dsjopahtl/image/upload/v1731164126/Galaxy_gynx7g_1_wxnepf.jpg',
     0.05, // Frame depth
     { x: -7, y: 1.5, z: -0.3 }, // Position on the wall
     { x: 0, y: Math.PI, z: 0 } // Rotation
@@ -545,7 +545,7 @@ createFramedArtwork(
 createFramedArtwork(
     7,
     // './img/sky.jpg',
-    'https://res.cloudinary.com/dsjopahtl/image/upload/v1731162459/Wolf_Flowers_i0ugzp.jpg', // Replace with your image URL
+    'https://res.cloudinary.com/dsjopahtl/image/upload/v1731164123/Wolf_Flowers_i0ugzp_1_p2i0ms.jpg', // Replace with your image URL
     0.05, // Frame depth
     { x: 7, y: 1.5, z: blockDepth + 6.8 }, // Position on the wall
     { x: 0, y: 0, z: 0 } // Rotation
@@ -564,7 +564,7 @@ createFramedArtwork(
 // Right inner block 2
 createFramedArtwork(
     9,
-    'https://res.cloudinary.com/dsjopahtl/image/upload/v1731162460/Carrot_Rabbit_zo38g0.jpg', // Replace with your image URL
+    'https://res.cloudinary.com/dsjopahtl/image/upload/v1731164117/Carrot_Rabbit_zo38g0_1_phaoap.jpg', // Replace with your image URL
     0.05, // Frame depth
     { x: 7, y: 1.5, z: blockDepth - 7.2 }, // Position on the wall
     { x: 0, y: 0, z: 0 } // Rotation
@@ -593,7 +593,7 @@ createFramedArtwork(
 // Right inner block 3 back
 createFramedArtwork(
     12,
-    'https://res.cloudinary.com/dsjopahtl/image/upload/v1730629014/bobby2_q2jy1t.png',
+    'https://res.cloudinary.com/dsjopahtl/image/upload/v1731164116/bobby2_q2jy1t_drcolt.jpg',
     0.05, // Frame depth
     { x: 7, y: 1.5, z: -0.3 }, // Position on the wall
     { x: 0, y: Math.PI, z: 0 } // Rotation
@@ -603,7 +603,7 @@ createFramedArtwork(
 
 createFramedArtwork(
     13,
-    'https://res.cloudinary.com/dsjopahtl/image/upload/v1731162460/Pollen_Count_m7nvpf.jpg',
+    'https://res.cloudinary.com/dsjopahtl/image/upload/v1731164110/Pollen_Count_m7nvpf_1_jfhtws.jpg',
     // 'https://images.prestigeonline.com/wp-content/uploads/sites/3/2024/09/20213028/449845721_860060342834580_5680899768624535938_n-1024x682.jpeg', // Replace with your image URL
     0.05, // Frame depth
     { x: -14.7, y: 1.5, z: 7.5 }, // Position on the wall
@@ -612,7 +612,7 @@ createFramedArtwork(
 
 createFramedArtwork(
     14,
-    'https://res.cloudinary.com/dsjopahtl/image/upload/v1731162459/sticks_hbcvvz.jpg',
+    'https://res.cloudinary.com/dsjopahtl/image/upload/v1731164120/sticks_hbcvvz_1_pxfntt.jpg',
     // 'https://images.prestigeonline.com/wp-content/uploads/sites/3/2024/09/20213028/449845721_860060342834580_5680899768624535938_n-1024x682.jpeg', // Replace with your image URL
     0.05, // Frame depth
     { x: -14.7, y: 1.5, z: 3 }, // Position on the wall
@@ -621,7 +621,7 @@ createFramedArtwork(
 
 createFramedArtwork(
     15,
-    'https://res.cloudinary.com/dsjopahtl/image/upload/v1731162463/stork_c6zszs.jpg',
+    'https://res.cloudinary.com/dsjopahtl/image/upload/v1731164110/stork_c6zszs_1_f3mbf5.jpg',
     // 'https://images.prestigeonline.com/wp-content/uploads/sites/3/2024/09/20213028/449845721_860060342834580_5680899768624535938_n-1024x682.jpeg', // Replace with your image URL
     0.05, // Frame depth
     { x: -14.7, y: 1.5, z: -1.5 }, // Position on the wall
@@ -630,7 +630,7 @@ createFramedArtwork(
 
 createFramedArtwork(
     16,
-    'https://res.cloudinary.com/dsjopahtl/image/upload/a_90/v1731162459/river_skvkif.jpg',
+    'https://res.cloudinary.com/dsjopahtl/image/upload/v1731164118/river_durh8e_1_o5zyr2.jpg',
     // 'https://images.prestigeonline.com/wp-content/uploads/sites/3/2024/09/20213028/449845721_860060342834580_5680899768624535938_n-1024x682.jpeg', // Replace with your image URL
     0.05, // Frame depth
     { x: -14.7, y: 1.5, z: -6 }, // Position on the wall
@@ -639,7 +639,7 @@ createFramedArtwork(
 
 createFramedArtwork(
     17,
-    'https://res.cloudinary.com/dsjopahtl/image/upload/v1731162460/Milking_Cows_lzvfm8.jpg',
+    'https://res.cloudinary.com/dsjopahtl/image/upload/v1731164107/Milking_Cows_lzvfm8_1_ruwn2w.jpg',
     // 'https://images.prestigeonline.com/wp-content/uploads/sites/3/2024/09/20213028/449845721_860060342834580_5680899768624535938_n-1024x682.jpeg', // Replace with your image URL
     0.05, // Frame depth
     { x: -14.7, y: 1.5, z: -12 }, // Position on the wall
@@ -650,7 +650,7 @@ createFramedArtwork(
 
 createFramedArtwork(
     18,
-    'https://res.cloudinary.com/dsjopahtl/image/upload/v1731162461/The_Art_Of_The_Duck_wskvvm.jpg',
+    'https://res.cloudinary.com/dsjopahtl/image/upload/v1731164121/The_Art_Of_The_Duck_wskvvm_1_eldxuj.jpg',
     // 'https://images.prestigeonline.com/wp-content/uploads/sites/3/2024/09/20213028/449845721_860060342834580_5680899768624535938_n-1024x682.jpeg', // Replace with your image URL
     0.05, // Frame depth
     { x: 14.7, y: 1.5, z: 7.5 }, // Position on the wall
@@ -659,7 +659,7 @@ createFramedArtwork(
 
 createFramedArtwork(
     19,
-    'https://res.cloudinary.com/dsjopahtl/image/upload/v1731162460/Dripping_Red_nmqi0e.jpg',
+    'https://res.cloudinary.com/dsjopahtl/image/upload/v1731164124/Dripping_Red_nmqi0e_1_uhyrjx.jpg',
     // 'https://images.prestigeonline.com/wp-content/uploads/sites/3/2024/09/20213028/449845721_860060342834580_5680899768624535938_n-1024x682.jpeg', // Replace with your image URL
     0.05, // Frame depth
     { x: 14.7, y: 1.5, z: 3 }, // Position on the wall
@@ -668,7 +668,7 @@ createFramedArtwork(
 
 createFramedArtwork(
     20,
-    'https://res.cloudinary.com/dsjopahtl/image/upload/v1731162462/Sunflower_Hammy_chyxpe.jpg',
+    'https://res.cloudinary.com/dsjopahtl/image/upload/v1731164112/Sunflower_Hammy_chyxpe_1_qyevxj.jpg',
     // 'https://images.prestigeonline.com/wp-content/uploads/sites/3/2024/09/20213028/449845721_860060342834580_5680899768624535938_n-1024x682.jpeg', // Replace with your image URL
     0.05, // Frame depth
     { x: 14.7, y: 1.5, z: -1.5 }, // Position on the wall
@@ -677,7 +677,7 @@ createFramedArtwork(
 
 createFramedArtwork(
     21,
-    'https://res.cloudinary.com/dsjopahtl/image/upload/v1731162461/Mother_Of_Cats_xzku8x.jpg',
+    'https://res.cloudinary.com/dsjopahtl/image/upload/v1731164109/Mother_Of_Cats_xzku8x_1_gu5hyr.jpg',
     // 'https://images.prestigeonline.com/wp-content/uploads/sites/3/2024/09/20213028/449845721_860060342834580_5680899768624535938_n-1024x682.jpeg', // Replace with your image URL
     0.05, // Frame depth
     { x: 14.7, y: 1.5, z: -6 }, // Position on the wall
@@ -711,7 +711,7 @@ createFramedArtwork(
 createFramedArtwork(
     24,
     // './img/sky.jpg',
-    'https://res.cloudinary.com/dsjopahtl/image/upload/v1731162464/Cherry_Pond_xgglbx.jpg', // Replace with your image URL
+    'https://res.cloudinary.com/dsjopahtl/image/upload/v1731164368/Cherry_Pond_xgglbx_1_qkeqxo.jpg', // Replace with your image URL
     0.05, // Frame depth
     { x: 0, y: 2.8, z: 17.2 }, // Position on the wall
     { x: 0, y: Math.PI, z: 0 }, // Rotation
