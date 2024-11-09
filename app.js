@@ -751,8 +751,6 @@ document.body.appendChild(crosshair);
 
 // ---------------------------------------- Section: Mobile View Panning and Joystick ---------------------------------------- //
 
-// ---------------------------------------- Section: Joystick Controls ---------------------------------------- //
-
 const joystick = {
     container: document.getElementById("joystick-container"),
     handle: document.getElementById("joystick-handle"),
@@ -761,7 +759,7 @@ const joystick = {
     startY: 0,
     deltaX: 0,
     deltaY: 0,
-    sensitivity: 0.45,  // Adjust for camera movement speed
+    sensitivity: 0.05,  // Adjust for camera movement speed
     maxDistance: 40,    // Maximum distance joystick can move from center
     isActive: false,    // Track if joystick is being used
     touchId: null       // Track the touch ID for joystick control
@@ -805,15 +803,19 @@ function moveCameraWithJoystick(deltaX, deltaY) {
 
 // Joystick touchstart event
 joystick.container.addEventListener("touchstart", (event) => {
-    const touch = event.touches[0];
-    joystick.isDragging = true;
-    joystick.isActive = true;
-    joystick.touchId = touch.identifier;
-    joystick.startX = touch.clientX;
-    joystick.startY = touch.clientY;
+    for (const touch of event.touches) {
+        if (joystick.touchId === null) { // Only assign if not already assigned
+            joystick.isDragging = true;
+            joystick.isActive = true;
+            joystick.touchId = touch.identifier;
+            joystick.startX = touch.clientX;
+            joystick.startY = touch.clientY;
+            break;
+        }
+    }
 });
 
-// Joystick touchmove event (runs independently of panning)
+// General touchmove event to handle joystick movement and panning concurrently
 window.addEventListener("touchmove", (event) => {
     for (const touch of event.touches) {
         if (touch.identifier === joystick.touchId && joystick.isDragging) {
@@ -851,7 +853,7 @@ window.addEventListener("touchmove", (event) => {
     }
 });
 
-// Joystick touchend event
+// General touchend event to reset joystick and panning when each is released
 window.addEventListener("touchend", (event) => {
     for (const touch of event.changedTouches) {
         if (touch.identifier === joystick.touchId) {
@@ -871,17 +873,15 @@ window.addEventListener("touchend", (event) => {
 
 // Panning (rotation) touchstart outside of joystick
 window.addEventListener("touchstart", (event) => {
-    if (panningTouchId === null) {
-        for (const touch of event.touches) {
-            // Only start panning if touch is outside joystick container
-            if (!joystick.container.contains(event.target)) {
-                panningTouchId = touch.identifier;
-                touchStartX = touch.clientX;
-                touchStartY = touch.clientY;
-                initialQuaternion = controls.getObject().quaternion.clone();
-                initialEuler = new THREE.Euler().setFromQuaternion(initialQuaternion, 'YXZ');
-                break;
-            }
+    for (const touch of event.touches) {
+        // Only start panning if touch is outside joystick container and panning is not already active
+        if (!joystick.container.contains(event.target) && panningTouchId === null) {
+            panningTouchId = touch.identifier;
+            touchStartX = touch.clientX;
+            touchStartY = touch.clientY;
+            initialQuaternion = controls.getObject().quaternion.clone();
+            initialEuler = new THREE.Euler().setFromQuaternion(initialQuaternion, 'YXZ');
+            break;
         }
     }
 });
