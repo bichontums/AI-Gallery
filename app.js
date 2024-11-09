@@ -24,8 +24,8 @@ function fadeOutOverlay() {
     }, 1000); // 2 seconds matches the transition time
 }
 
-// Call this function once your scene is ready to display
-setTimeout(fadeOutOverlay, 3000); // Adjust timing as needed
+// // Call this function once your scene is ready to display
+// setTimeout(fadeOutOverlay, 3000); // Adjust timing as needed
 
 
 // ---------------------------------------- Section: Gallery layout ---------------------------------------- //
@@ -875,10 +875,23 @@ const joystick = {
     startY: 0,
     deltaX: 0,
     deltaY: 0,
-    sensitivity: 0.01 // Adjust for camera movement speed
+    maxDistance: 40,
+    sensitivity: 0.2, // Adjust for camera movement speed
+    isActive: false     // Track if the joystick is being used
 };
 
-// Camera movement with joystick (x and z only)
+// Limit joystick handle movement within max distance
+function limitJoystickHandle(deltaX, deltaY) {
+    const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+    if (distance > joystick.maxDistance) {
+        const angle = Math.atan2(deltaY, deltaX);
+        deltaX = Math.cos(angle) * joystick.maxDistance;
+        deltaY = Math.sin(angle) * joystick.maxDistance;
+    }
+    return { deltaX, deltaY };
+}
+
+// Function to move the camera continuously based on joystick position
 function moveCameraWithJoystick(deltaX, deltaY) {
     const forward = new THREE.Vector3();
     controls.getObject().getWorldDirection(forward);
@@ -888,38 +901,58 @@ function moveCameraWithJoystick(deltaX, deltaY) {
     const right = new THREE.Vector3();
     right.crossVectors(forward, new THREE.Vector3(0, 1, 0)).normalize();
 
-    // Update camera position for forward/backward and strafe movements
-    controls.getObject().position.add(forward.multiplyScalar(-deltaY * joystick.sensitivity));
-    controls.getObject().position.add(right.multiplyScalar(deltaX * joystick.sensitivity));
+    // Scale movement by joystick offset
+    controls.getObject().position.add(forward.multiplyScalar(-deltaY * joystick.sensitivity / joystick.maxDistance));
+    controls.getObject().position.add(right.multiplyScalar(deltaX * joystick.sensitivity / joystick.maxDistance));
 }
 
 // Touchstart for joystick
 joystick.container.addEventListener("touchstart", (event) => {
     if (event.touches.length === 1) {
         joystick.isDragging = true;
+        joystick.isActive = true;
         joystick.startX = event.touches[0].clientX;
         joystick.startY = event.touches[0].clientY;
     }
 });
 
+// Joystick touchmove event (updates delta without moving camera directly)
 joystick.container.addEventListener("touchmove", (event) => {
     if (joystick.isDragging) {
         const touch = event.touches[0];
         joystick.deltaX = touch.clientX - joystick.startX;
         joystick.deltaY = touch.clientY - joystick.startY;
 
-        // Move joystick handle and camera
+        // Apply limit to joystick handle movement
+        const limitedMovement = limitJoystickHandle(joystick.deltaX, joystick.deltaY);
+        joystick.deltaX = limitedMovement.deltaX;
+        joystick.deltaY = limitedMovement.deltaY;
+
+        // Move joystick handle visually within limited area
         joystick.handle.style.transform = `translate(${joystick.deltaX}px, ${joystick.deltaY}px)`;
-        moveCameraWithJoystick(joystick.deltaX, joystick.deltaY);
     }
 });
 
+
+// Joystick touchend event (reset joystick position and stop movement)
 joystick.container.addEventListener("touchend", () => {
     joystick.isDragging = false;
+    joystick.isActive = false;
     joystick.deltaX = 0;
     joystick.deltaY = 0;
     joystick.handle.style.transform = 'translate(0, 0)';
 });
+
+// Animation loop for continuous camera movement
+function animateJoystickMovement() {
+    if (joystick.isActive && (joystick.deltaX !== 0 || joystick.deltaY !== 0)) {
+        moveCameraWithJoystick(joystick.deltaX, joystick.deltaY);
+    }
+    requestAnimationFrame(animateJoystickMovement);
+}
+
+// Start the joystick movement loop
+animateJoystickMovement();
 
 // Touch handling for camera panning/rotation
 window.addEventListener("touchstart", (event) => {

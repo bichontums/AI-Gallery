@@ -13,7 +13,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    opacity: 0;
+    opacity: 1;
     transition: opacity 1s ease; /* Smooth fade-out */
     z-index: 1000; /* Ensure overlay is above other elements */
 }
@@ -21,9 +21,12 @@ body {
 /* Centered welcome text */
 #welcomeText {
     font-size: 2em;
+    font-weight: 300;
     color: gray;
     opacity: 0; /* Start invisible */
     animation: fadeInText 1s forwards 0.5s; /* Fade in after 0.5s delay */
+    padding: 30px;
+    text-align: center;
 }
 
 /* Keyframe for text fade-in */
